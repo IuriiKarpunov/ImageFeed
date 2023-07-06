@@ -6,6 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -37,6 +38,19 @@
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wYs-bT-UJY" userLabel="linearGradient">
+                                                    <rect key="frame" x="16" y="190" width="361" height="30"/>
+                                                    <color key="backgroundColor" systemColor="systemPinkColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="KCQ-sD-JnF"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="16"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iha-f2-QWh" userLabel="likeButton">
                                                     <rect key="frame" x="333" y="4" width="44" height="44"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -56,18 +70,22 @@
                                                 <constraint firstAttribute="bottom" secondItem="L9H-Fa-sra" secondAttribute="bottom" constant="4" id="2al-yg-RJo"/>
                                                 <constraint firstItem="Iha-f2-QWh" firstAttribute="top" secondItem="L9H-Fa-sra" secondAttribute="top" id="6YT-jI-6MF"/>
                                                 <constraint firstItem="Iha-f2-QWh" firstAttribute="trailing" secondItem="L9H-Fa-sra" secondAttribute="trailing" id="DYR-ON-Xmo"/>
+                                                <constraint firstItem="wYs-bT-UJY" firstAttribute="leading" secondItem="L9H-Fa-sra" secondAttribute="leading" id="KIW-pb-5do"/>
                                                 <constraint firstItem="L9H-Fa-sra" firstAttribute="top" secondItem="KWV-Bk-Ppi" secondAttribute="top" constant="4" id="XWY-p1-WYa"/>
                                                 <constraint firstItem="ckY-Pv-nBb" firstAttribute="leading" secondItem="L9H-Fa-sra" secondAttribute="leading" constant="8" id="kCh-HM-onF"/>
                                                 <constraint firstItem="L9H-Fa-sra" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ckY-Pv-nBb" secondAttribute="trailing" constant="8" id="p5G-Jf-irn"/>
                                                 <constraint firstItem="L9H-Fa-sra" firstAttribute="leading" secondItem="KWV-Bk-Ppi" secondAttribute="leading" constant="16" id="pzD-UB-mdG"/>
+                                                <constraint firstItem="wYs-bT-UJY" firstAttribute="bottom" secondItem="L9H-Fa-sra" secondAttribute="bottom" id="qNj-ry-NPF"/>
                                                 <constraint firstAttribute="trailing" secondItem="L9H-Fa-sra" secondAttribute="trailing" constant="16" id="qR6-Qs-jB9"/>
                                                 <constraint firstItem="L9H-Fa-sra" firstAttribute="bottom" secondItem="ckY-Pv-nBb" secondAttribute="bottom" constant="8" id="r6g-hG-OfE"/>
+                                                <constraint firstItem="wYs-bT-UJY" firstAttribute="trailing" secondItem="L9H-Fa-sra" secondAttribute="trailing" id="u1Q-Vh-D4o"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="cellImage" destination="L9H-Fa-sra" id="att-Ju-CUh"/>
                                             <outlet property="dateLabel" destination="ckY-Pv-nBb" id="1Tc-sO-edl"/>
                                             <outlet property="likeButton" destination="Iha-f2-QWh" id="a97-ci-iun"/>
+                                            <outlet property="linearGradient" destination="wYs-bT-UJY" id="zzG-56-6eI"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -104,5 +122,8 @@
         <namedColor name="YP White">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>
