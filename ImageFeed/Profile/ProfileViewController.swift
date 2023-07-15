@@ -15,6 +15,11 @@ class ProfileViewController: UIViewController {
     @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet private weak var logoutButton: UIButton!
     
+    // MARK: - UIStatusBarStyle
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     @IBAction private func didTapLogoutButton(_ sender: Any) {
     }
