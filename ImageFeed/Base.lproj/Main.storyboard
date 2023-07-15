@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="RLb-QW-tzl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8zh-xa-BNt">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -129,6 +129,7 @@
                     <navigationItem key="navigationItem" id="mAi-Zx-Jb3"/>
                     <connections>
                         <outlet property="tableView" destination="AOG-D9-hsn" id="cOc-Uj-Rfo"/>
+                        <segue destination="RLb-QW-tzl" kind="show" identifier="ShowSingleImage" id="17Y-K4-N0y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -144,7 +145,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="A3W-7T-blD">
-                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="kwd-eG-1g3"/>
@@ -156,6 +157,7 @@
                             <constraint firstItem="A3W-7T-blD" firstAttribute="top" secondItem="kwd-eG-1g3" secondAttribute="top" id="nR6-Uu-4Jc"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="sUG-m7-Oya"/>
                     <connections>
                         <outlet property="imageView" destination="A3W-7T-blD" id="PtW-FP-Fqm"/>
                     </connections>
