@@ -42,6 +42,7 @@ class ProfileViewController: UIViewController {
     
     @objc
     private func didTapLogoutButton() {
+        avatarImageView.image = UIImage(named: "Stub.png")
         nameLabel.removeFromSuperview()
         nameLabel = nil
         loginLabel.removeFromSuperview()
@@ -58,7 +59,7 @@ class ProfileViewController: UIViewController {
     // MARK: - Private Methods
     
     private func creatAvatarImageView() {
-        let avatarImageView = UIImageView(image: UIImage(named: "Stub.png"))
+        let avatarImageView = UIImageView(image: UIImage(named: "test profile photo.png"))
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(avatarImageView)
         NSLayoutConstraint.activate([
