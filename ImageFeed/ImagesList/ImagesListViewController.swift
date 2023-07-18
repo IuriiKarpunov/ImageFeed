@@ -14,15 +14,6 @@ class ImagesListViewController: UIViewController {
     private let photosName: [String] = Array(0..<21).map{ "\($0)" }
     private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
     
-    // MARK: - Public Properties
-    
-    private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
-        return formatter
-    }()
-    
     // MARK: - IBOutlet
     
     @IBOutlet private var tableView: UITableView!
@@ -49,36 +40,6 @@ class ImagesListViewController: UIViewController {
         } else {
             super.prepare(for: segue, sender: sender)
         }
-    }
-}
-
-extension ImagesListViewController {
-    func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
-        gradientLayer(cell)
-        
-        guard let image = UIImage(named: photosName[indexPath.row]) else {
-            return
-        }
-        
-        cell.cellImage.image = image
-        cell.dateLabel.text = dateFormatter.string(from: Date())
-        let isLike = indexPath.row % 2 == 0
-        let likeImage = isLike ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
-        cell.likeButton.setImage(likeImage, for: .normal)
-    }
-    
-    func gradientLayer(_ cell: ImagesListCell) {
-        let gradientLayer = CAGradientLayer()
-        let startColor: UIColor = UIColor(red: 0.26, green: 0.27, blue: 0.34, alpha: 0.00)
-        let endColor: UIColor = UIColor(red: 0.26, green: 0.27, blue: 0.34, alpha: 0.20)
-        let gradientColors: [CGColor] = [startColor.cgColor, endColor.cgColor]
-        gradientLayer.frame = cell.linearGradient.bounds
-        gradientLayer.colors = gradientColors
-        
-        cell.linearGradient.backgroundColor = UIColor.clear
-        cell.linearGradient.layer.insertSublayer(gradientLayer, at: 0)
-        
-        cell.linearGradient.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
     }
 }
 
@@ -118,7 +79,7 @@ extension ImagesListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        configCell(for: imagesListCell, with: indexPath)
+        imagesListCell.configCell(photo: photosName[indexPath.row], with: indexPath)
         return imagesListCell
     }
 }
