@@ -9,14 +9,12 @@ import UIKit
 
 class ImagesListViewController: UIViewController {
 
-    // MARK: - IBOutlet
-    
-    @IBOutlet private var tableView: UITableView!
-    
-    // MARK: - Private Properties
+    // MARK: - Private Constants
     
     private let photosName: [String] = Array(0..<21).map{ "\($0)" }
     private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
+    
+    // MARK: - Public Properties
     
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -24,6 +22,10 @@ class ImagesListViewController: UIViewController {
         formatter.timeStyle = .none
         return formatter
     }()
+    
+    // MARK: - IBOutlet
+    
+    @IBOutlet private var tableView: UITableView!
     
     // MARK: - UIStatusBarStyle
     
