@@ -9,7 +9,7 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    // MARK: - IBOutlet
+    // MARK: - Subview Properties
     
     private var avatarImageView: UIImageView!
     private var noPhotoImageView: UIImageView!

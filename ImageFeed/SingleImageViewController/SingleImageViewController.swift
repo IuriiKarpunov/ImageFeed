@@ -21,7 +21,7 @@ final class SingleImageViewController: UIViewController {
     
     // MARK: - IBOutlet
     
-    @IBOutlet var imageView: UIImageView!
+    @IBOutlet private var imageView: UIImageView!
     @IBOutlet private var scrollView: UIScrollView!
     
     // MARK: - UIStatusBarStyle

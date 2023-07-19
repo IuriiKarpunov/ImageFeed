@@ -49,8 +49,3 @@ final class ImagesListCell: UITableViewCell {
         view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
     }
 }
-
-
-
-    
-

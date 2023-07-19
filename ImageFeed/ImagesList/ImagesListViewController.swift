@@ -83,5 +83,3 @@ extension ImagesListViewController: UITableViewDataSource {
         return imagesListCell
     }
 }
-
-
