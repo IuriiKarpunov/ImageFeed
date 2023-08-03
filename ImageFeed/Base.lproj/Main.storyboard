@@ -80,7 +80,7 @@
                                 </wkWebViewConfiguration>
                             </wkWebView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cy1-14-vfK" userLabel="nav_back_button">
-                                <rect key="frame" x="9" y="9" width="24" height="24"/>
+                                <rect key="frame" x="8" y="11" width="24" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="24" id="Emf-vk-KFL"/>
                                     <constraint firstAttribute="width" constant="24" id="c5W-Qo-4gc"/>
@@ -99,8 +99,8 @@
                             <constraint firstItem="rJg-UQ-6rI" firstAttribute="top" secondItem="nSh-mm-D5Z" secondAttribute="top" id="Kdw-6P-e9Z"/>
                             <constraint firstItem="rJg-UQ-6rI" firstAttribute="leading" secondItem="nSh-mm-D5Z" secondAttribute="leading" id="QNu-pZ-Gib"/>
                             <constraint firstItem="nSh-mm-D5Z" firstAttribute="bottom" secondItem="rJg-UQ-6rI" secondAttribute="bottom" id="RzH-n5-JQJ"/>
-                            <constraint firstItem="cy1-14-vfK" firstAttribute="top" secondItem="nSh-mm-D5Z" secondAttribute="top" constant="9" id="T0c-Bg-et7"/>
-                            <constraint firstItem="cy1-14-vfK" firstAttribute="leading" secondItem="nSh-mm-D5Z" secondAttribute="leading" constant="9" id="VO2-uF-Gps"/>
+                            <constraint firstItem="cy1-14-vfK" firstAttribute="top" secondItem="nSh-mm-D5Z" secondAttribute="top" constant="11" id="T0c-Bg-et7"/>
+                            <constraint firstItem="cy1-14-vfK" firstAttribute="leading" secondItem="nSh-mm-D5Z" secondAttribute="leading" constant="8" id="VO2-uF-Gps"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="3P0-se-EbP"/>
