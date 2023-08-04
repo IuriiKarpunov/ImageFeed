@@ -91,26 +91,34 @@
                                     <action selector="didTapBackButton:" destination="QYB-m4-SLL" eventType="touchUpInside" id="3iU-Vd-ioU"/>
                                 </connections>
                             </button>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="xyk-0O-eZH">
+                                <rect key="frame" x="0.0" y="35" width="393" height="4"/>
+                                <color key="progressTintColor" name="YP Black"/>
+                            </progressView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="nSh-mm-D5Z"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="nSh-mm-D5Z" firstAttribute="trailing" secondItem="rJg-UQ-6rI" secondAttribute="trailing" id="3xS-qV-SQn"/>
                             <constraint firstItem="rJg-UQ-6rI" firstAttribute="top" secondItem="nSh-mm-D5Z" secondAttribute="top" id="Kdw-6P-e9Z"/>
+                            <constraint firstItem="nSh-mm-D5Z" firstAttribute="trailing" secondItem="xyk-0O-eZH" secondAttribute="trailing" id="MJ2-Vh-ObW"/>
                             <constraint firstItem="rJg-UQ-6rI" firstAttribute="leading" secondItem="nSh-mm-D5Z" secondAttribute="leading" id="QNu-pZ-Gib"/>
                             <constraint firstItem="nSh-mm-D5Z" firstAttribute="bottom" secondItem="rJg-UQ-6rI" secondAttribute="bottom" id="RzH-n5-JQJ"/>
                             <constraint firstItem="cy1-14-vfK" firstAttribute="top" secondItem="nSh-mm-D5Z" secondAttribute="top" constant="11" id="T0c-Bg-et7"/>
                             <constraint firstItem="cy1-14-vfK" firstAttribute="leading" secondItem="nSh-mm-D5Z" secondAttribute="leading" constant="8" id="VO2-uF-Gps"/>
+                            <constraint firstItem="xyk-0O-eZH" firstAttribute="leading" secondItem="nSh-mm-D5Z" secondAttribute="leading" id="c4l-fa-IVb"/>
+                            <constraint firstItem="xyk-0O-eZH" firstAttribute="top" secondItem="cy1-14-vfK" secondAttribute="bottom" id="pLq-e7-f49"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="3P0-se-EbP"/>
                     <connections>
+                        <outlet property="progressView" destination="xyk-0O-eZH" id="MKu-xo-mUV"/>
                         <outlet property="webView" destination="rJg-UQ-6rI" id="J22-n6-60P"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gO2-uV-jqT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1479" y="-2"/>
+            <point key="canvasLocation" x="-1480.1526717557251" y="-2.1126760563380285"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="nAD-Si-TUa">
