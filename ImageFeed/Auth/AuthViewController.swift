@@ -9,6 +9,10 @@ import UIKit
 
 final class AuthViewController: UIViewController {
 
+    // MARK: - Public Properties
+    
+    weak var delegate: AuthViewControllerDelegate?
+    
     // MARK: - Private Constants
     
     private let showWebViewSegueIdentifier = "ShowWebView"
@@ -37,7 +41,9 @@ final class AuthViewController: UIViewController {
     //MARK: - WebViewViewControllerDelegate
 
 extension AuthViewController: WebViewViewControllerDelegate {
-    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) { }
+    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
+        delegate?.authViewController(self, didAuthenticateWithCode: code)
+    }
     
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
         dismiss(animated: true)

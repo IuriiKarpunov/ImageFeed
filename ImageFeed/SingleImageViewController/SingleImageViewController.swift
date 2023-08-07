@@ -79,7 +79,9 @@ extension SingleImageViewController: UIScrollViewDelegate {
         imageView
     }
     
-//    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
-//        rescaleAndCenterImageInScrollView(image: image)
-//    }
+    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
+        UIView.animate(withDuration: 0.5) { [self] in
+            rescaleAndCenterImageInScrollView(image: image)
+        }
+    }
 }
