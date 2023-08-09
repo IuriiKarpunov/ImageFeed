@@ -24,18 +24,7 @@ final class WebViewViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        var urlComponents = URLComponents(string: unsplashAuthorizeURLString)!
-        urlComponents.queryItems = [
-        URLQueryItem(name: "client_id", value: accessKey),
-        URLQueryItem(name: "redirect_uri", value: redirectURI),
-        URLQueryItem(name: "response_type", value: "code"),
-        URLQueryItem(name: "scope", value: accessScope)
-        ]
-        let url = urlComponents.url!
-        let request = URLRequest(url: url)
-        webView.load(request)
-        
+        loadWebView()
         webView.navigationDelegate = self
     }
     
@@ -81,14 +70,25 @@ final class WebViewViewController: UIViewController {
     }
 }
 
+private extension WebViewViewController {
+    func loadWebView() {
+        var urlComponents = URLComponents(string: unsplashAuthorizeURLString)!
+        urlComponents.queryItems = [URLQueryItem(name: "client_id", value: accessKey),
+                                    URLQueryItem(name: "redirect_uri", value: redirectURI),
+                                    URLQueryItem(name: "response_type", value: "code"),
+                                    URLQueryItem(name: "scope", value: accessScope)]
+        let url = urlComponents.url!
+        let request = URLRequest(url: url)
+        webView.load(request)
+    }
+}
+
 // MARK: - WKNavigationDelegate
 
 extension WebViewViewController: WKNavigationDelegate {
-    func webView(
-        _ webView: WKWebView,
-        decidePolicyFor navigationAction: WKNavigationAction,
-        decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
-    ) {
+    func webView(_ webView: WKWebView,
+                 decidePolicyFor navigationAction: WKNavigationAction,
+                 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if let code = code(from: navigationAction) {
             delegate?.webViewViewController(self, didAuthenticateWithCode: code)
             decisionHandler(.cancel)
