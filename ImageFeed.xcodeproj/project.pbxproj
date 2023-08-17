@@ -22,6 +22,8 @@
 		4A7510AC2A6033EC003456E8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7510AB2A6033EC003456E8 /* ProfileViewController.swift */; };
 		4AA35D732A863E480020FB11 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA35D722A863E480020FB11 /* ProgressHUD */; };
 		4AA35D752A8A30690020FB11 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA35D742A8A30690020FB11 /* UIBlockingProgressHUD.swift */; };
+		4AA35D772A8E1E5B0020FB11 /* URLRequest+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA35D762A8E1E5B0020FB11 /* URLRequest+Extensions.swift */; };
+		4AA35D792A8E1EDD0020FB11 /* URLSession+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA35D782A8E1EDD0020FB11 /* URLSession+Extensions.swift */; };
 		4ABD5EB52A4F186E000B6B2B /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABD5EB42A4F186E000B6B2B /* UIColor.swift */; };
 		4AC1FDD32A7FD02C00D2B742 /* WebViewViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1FDD22A7FD02C00D2B742 /* WebViewViewControllerDelegate.swift */; };
 		4AC1FDD62A7FD43500D2B742 /* OAuthTokenResponseBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1FDD52A7FD43500D2B742 /* OAuthTokenResponseBody.swift */; };
@@ -48,6 +50,8 @@
 		4A665E4F2A5185E30006681E /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 		4A7510AB2A6033EC003456E8 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		4AA35D742A8A30690020FB11 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
+		4AA35D762A8E1E5B0020FB11 /* URLRequest+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Extensions.swift"; sourceTree = "<group>"; };
+		4AA35D782A8E1EDD0020FB11 /* URLSession+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Extensions.swift"; sourceTree = "<group>"; };
 		4ABD5EB42A4F186E000B6B2B /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		4AC1FDD22A7FD02C00D2B742 /* WebViewViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewControllerDelegate.swift; sourceTree = "<group>"; };
 		4AC1FDD52A7FD43500D2B742 /* OAuthTokenResponseBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthTokenResponseBody.swift; sourceTree = "<group>"; };
@@ -145,6 +149,8 @@
 			children = (
 				4ABD5EB42A4F186E000B6B2B /* UIColor.swift */,
 				4A01D1872A66889B0031483E /* Date+Extensions.swift */,
+				4AA35D762A8E1E5B0020FB11 /* URLRequest+Extensions.swift */,
+				4AA35D782A8E1EDD0020FB11 /* URLSession+Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -263,6 +269,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AA35D792A8E1EDD0020FB11 /* URLSession+Extensions.swift in Sources */,
 				4A7510AC2A6033EC003456E8 /* ProfileViewController.swift in Sources */,
 				4A01D1882A66889B0031483E /* Date+Extensions.swift in Sources */,
 				4A0A2B742A7A9E4500D32BED /* AuthViewController.swift in Sources */,
@@ -271,6 +278,7 @@
 				4AC1FDD62A7FD43500D2B742 /* OAuthTokenResponseBody.swift in Sources */,
 				4AC1FDD82A7FD63900D2B742 /* OAuth2Service.swift in Sources */,
 				4AC1FDDF2A810A6400D2B742 /* AuthViewControllerDelegate.swift in Sources */,
+				4AA35D772A8E1E5B0020FB11 /* URLRequest+Extensions.swift in Sources */,
 				4ABD5EB52A4F186E000B6B2B /* UIColor.swift in Sources */,
 				4A5255B52A62BF8300682808 /* SingleImageViewController.swift in Sources */,
 				4A665E502A5185E30006681E /* ImagesListCell.swift in Sources */,
