@@ -19,6 +19,8 @@ final class ProfileViewController: UIViewController {
     private var favoritesLabel: UILabel!
     private var logoutButton: UIButton!
     
+    private let profileService = ProfileService.shared
+    
     // MARK: - UIStatusBarStyle
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -36,6 +38,19 @@ final class ProfileViewController: UIViewController {
         creatFavoritesLabel()
         creatNoPhotoImageView()
         creatLogoutButton()
+        
+        updateProfileDetails(profile: profileService.profile)
+    }
+    
+    // MARK: - Public Methods
+    
+    func updateProfileDetails(profile: Profile?) {
+        guard let profile = profile else {
+            return
+        }
+        nameLabel.text = profile.name
+        loginLabel.text = profile.loginName
+        descriptionLabel.text = profile.bio
     }
     
     // MARK: - IBAction

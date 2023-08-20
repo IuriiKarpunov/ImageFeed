@@ -71,10 +71,6 @@ extension OAuth2Service {
         }
     }
     
-    var selfProfileRequest: URLRequest {
-        URLRequest.makeHTTPRequest(path: "/me", httpMethod: "GET")
-    }
-    
     func profileImageURLRequest(username: String) -> URLRequest {
         URLRequest.makeHTTPRequest(path: "/users/\(username)", httpMethod: "GET")
     }

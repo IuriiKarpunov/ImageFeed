@@ -15,6 +15,7 @@ final class SplashViewController: UIViewController  {
     private let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
     private let oauth2TokenStorage = OAuth2TokenStorage()
     private let oauth2Service = OAuth2Service()
+    private let profileService = ProfileService.shared
     
     // MARK: - UIStatusBarStyle
     
@@ -74,8 +75,8 @@ extension SplashViewController: AuthViewControllerDelegate {
         oauth2Service.fetchAuthToken(code) { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case .success:
-                self.switchToTabBarController()
+            case .success(let token):
+                self.fetchProfile(token: token)
                 UIBlockingProgressHUD.dismiss()
             case .failure:
                 UIBlockingProgressHUD.dismiss()
@@ -84,4 +85,19 @@ extension SplashViewController: AuthViewControllerDelegate {
             }
         }
     }
+    
+    private func fetchProfile(token: String) {
+            profileService.fetchProfile(token) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success:
+                    UIBlockingProgressHUD.dismiss()
+                    self.switchToTabBarController()
+                case .failure:
+                    UIBlockingProgressHUD.dismiss()
+                    print("No Profile!")
+                    break
+                }
+            }
+        }
 }
