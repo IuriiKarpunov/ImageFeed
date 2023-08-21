@@ -71,10 +71,6 @@ extension OAuth2Service {
         }
     }
     
-    func profileImageURLRequest(username: String) -> URLRequest {
-        URLRequest.makeHTTPRequest(path: "/users/\(username)", httpMethod: "GET")
-    }
-    
     func photosRequest(page: Int, perPage: Int) -> URLRequest {
         URLRequest.makeHTTPRequest(path: "/photos?"
                                    + "page=\(page)"

@@ -18,6 +18,7 @@ final class ProfileViewController: UIViewController {
     private var descriptionLabel: UILabel!
     private var favoritesLabel: UILabel!
     private var logoutButton: UIButton!
+    private var profileImageServiceObserver: NSObjectProtocol?
     
     private let profileService = ProfileService.shared
     
@@ -51,6 +52,17 @@ final class ProfileViewController: UIViewController {
         nameLabel.text = profile.name
         loginLabel.text = profile.loginName
         descriptionLabel.text = profile.bio
+        
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileImageService.DidChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
+        updateAvatar()
     }
     
     // MARK: - IBAction
@@ -72,6 +84,14 @@ final class ProfileViewController: UIViewController {
     }
     
     // MARK: - Private Methods
+    
+    private func updateAvatar() {
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let url = URL(string: profileImageURL)
+        else { return }
+        
+    }
     
     private func creatAvatarImageView() {
         let avatarImageView = UIImageView(image: UIImage(named: "test profile photo.png"))

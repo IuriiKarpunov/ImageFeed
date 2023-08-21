@@ -16,6 +16,7 @@ final class SplashViewController: UIViewController  {
     private let oauth2TokenStorage = OAuth2TokenStorage()
     private let oauth2Service = OAuth2Service()
     private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
     
     // MARK: - UIStatusBarStyle
     
@@ -87,17 +88,19 @@ extension SplashViewController: AuthViewControllerDelegate {
     }
     
     private func fetchProfile(token: String) {
-            profileService.fetchProfile(token) { [weak self] result in
-                guard let self = self else { return }
-                switch result {
-                case .success:
-                    UIBlockingProgressHUD.dismiss()
-                    self.switchToTabBarController()
-                case .failure:
-                    UIBlockingProgressHUD.dismiss()
-                    print("No Profile!")
+        profileService.fetchProfile(token) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let data):
+                profileImageService.fetchProfileImageURL(token: token, username: data.username) { _ in }
+                UIBlockingProgressHUD.dismiss()
+                self.switchToTabBarController()
+            case .failure:
+                UIBlockingProgressHUD.dismiss()
+                print("No Profile!")
                     break
                 }
             }
+        
         }
 }
