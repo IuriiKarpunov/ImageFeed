@@ -10,6 +10,8 @@ import ProgressHUD
 
 final class SplashViewController: UIViewController  {
     
+    private var alertPresenter: AlertPresenterProtocol?
+    
     // MARK: - Private Constants
     
     private let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
@@ -28,6 +30,9 @@ final class SplashViewController: UIViewController  {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        alertPresenter = AlertPresenter(viewController: self)
+        
         if oauth2TokenStorage.token != nil {
             switchToTabBarController()
         } else {
@@ -44,6 +49,30 @@ final class SplashViewController: UIViewController  {
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
             .instantiateViewController(identifier: "TabBarViewController")
         window.rootViewController = tabBarController
+    }
+    
+//    private func showAlertNetworkError() {
+//        let model = AlertModel(
+//            title: "Что-то пошло не так(",
+//            message: "Не удалось войти в систему",
+//            buttonText: "ОК",
+//            completion: { [weak self] in
+//                guard let self = self else { return }
+//            })
+//        alertPresenter?.show(model)
+//    }
+    
+    func showAlertNetworkError() {
+        let alert = UIAlertController(
+                    title: "Что-то пошло не так(",
+                    message: "Не удалось войти в систему",
+                    preferredStyle: .alert)
+                
+                let action = UIAlertAction(title: "ОК", style: .default) { _ in
+                    
+                }
+                    alert.addAction(action)
+                    self.present(alert, animated: true, completion: nil)
     }
 }
 
@@ -81,7 +110,8 @@ extension SplashViewController: AuthViewControllerDelegate {
                 UIBlockingProgressHUD.dismiss()
             case .failure:
                 UIBlockingProgressHUD.dismiss()
-                print("No token!")
+                print("Показать алерт1, no token")
+                showAlertNetworkError()
                 break
             }
         }
@@ -97,7 +127,8 @@ extension SplashViewController: AuthViewControllerDelegate {
                 self.switchToTabBarController()
             case .failure:
                 UIBlockingProgressHUD.dismiss()
-                print("No Profile!")
+                print("Показать алерт2")
+                showAlertNetworkError()
                     break
                 }
             }
