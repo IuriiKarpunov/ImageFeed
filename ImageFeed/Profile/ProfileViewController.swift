@@ -98,6 +98,8 @@ final class ProfileViewController: UIViewController {
                                     options: [.processor(processor)])
     }
     
+    //MARK: - Creat View
+    
     private func creatAvatarImageView() {
         let avatarImageView = UIImageView(image: UIImage(named: "test profile photo.png"))
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
