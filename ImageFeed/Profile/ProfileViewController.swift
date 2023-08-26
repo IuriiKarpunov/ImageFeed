@@ -10,6 +10,10 @@ import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
+    // MARK: - Private Constants
+    
+    private let profileService = ProfileService.shared
+    
     // MARK: - Subview Properties
     
     private var avatarImageView: UIImageView!
@@ -20,8 +24,6 @@ final class ProfileViewController: UIViewController {
     private var favoritesLabel: UILabel!
     private var logoutButton: UIButton!
     private var profileImageServiceObserver: NSObjectProtocol?
-    
-    private let profileService = ProfileService.shared
     
     // MARK: - UIStatusBarStyle
     

@@ -10,10 +10,6 @@ import ProgressHUD
 
 final class SplashViewController: UIViewController  {
     
-    private var splashScreenImageView: UIImageView!
-    private var alertPresenter: AlertPresenterProtocol?
-    private var authViewController: AuthViewController?
-    
     // MARK: - Private Constants
     
     private let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
@@ -21,6 +17,12 @@ final class SplashViewController: UIViewController  {
     private let oauth2Service = OAuth2Service()
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
+    
+    // MARK: - Private Properties
+    
+    private var splashScreenImageView: UIImageView!
+    private var alertPresenter: AlertPresenterProtocol?
+    private var authViewController: AuthViewController?
     
     // MARK: - UIStatusBarStyle
     

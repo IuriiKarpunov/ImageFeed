@@ -15,11 +15,12 @@ final class WebViewViewController: UIViewController {
     
     weak var delegate: WebViewViewControllerDelegate?
     private var estimatedProgressObservation: NSKeyValueObservation?
+    
     // MARK: - IBOutlet
     
     @IBOutlet private var webView: WKWebView!
     @IBOutlet private var progressView: UIProgressView!
-   
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
