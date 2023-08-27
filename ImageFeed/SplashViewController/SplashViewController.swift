@@ -118,7 +118,6 @@ extension SplashViewController: AuthViewControllerDelegate {
                 UIBlockingProgressHUD.dismiss()
             case .failure:
                 UIBlockingProgressHUD.dismiss()
-                print("Показать алерт, no token")
                 showAlertNetworkError()
                 break
             }
@@ -135,7 +134,6 @@ extension SplashViewController: AuthViewControllerDelegate {
                 self.switchToTabBarController()
             case .failure:
                 UIBlockingProgressHUD.dismiss()
-                print("Показать алерт")
                 showAlertNetworkError()
                 break
             }

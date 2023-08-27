@@ -23,7 +23,7 @@ final class ProfileService {
     
     func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
         assert(Thread.isMainThread)
-        if profile != nil { return }
+        guard profile == nil else { return }
         task?.cancel()
         
         var request: URLRequest? = selfProfileRequest
