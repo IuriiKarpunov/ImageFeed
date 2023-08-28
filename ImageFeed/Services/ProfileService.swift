@@ -40,9 +40,9 @@ final class ProfileService {
                 case .success(let body):
                     let profile = Profile(
                         username: body.username,
-                        name: "\(body.firstName) \(body.lastName)",
+                        name: "\(body.firstName) \(body.lastName ?? "")",
                         loginName: "@\(body.username)",
-                        bio: body.bio
+                        bio: body.bio ?? "Hello, world!"
                     )
                     self.profile = profile
                     
