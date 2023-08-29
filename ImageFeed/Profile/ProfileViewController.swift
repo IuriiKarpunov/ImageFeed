@@ -6,8 +6,13 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
+    
+    // MARK: - Private Constants
+    
+    private let profileService = ProfileService.shared
     
     // MARK: - Subview Properties
     
@@ -18,6 +23,7 @@ final class ProfileViewController: UIViewController {
     private var descriptionLabel: UILabel!
     private var favoritesLabel: UILabel!
     private var logoutButton: UIButton!
+    private var profileImageServiceObserver: NSObjectProtocol?
     
     // MARK: - UIStatusBarStyle
     
@@ -29,6 +35,7 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .ypBlack
         creatAvatarImageView()
         creatNameLabel()
         creatLoginLabel()
@@ -36,6 +43,30 @@ final class ProfileViewController: UIViewController {
         creatFavoritesLabel()
         creatNoPhotoImageView()
         creatLogoutButton()
+        
+        updateProfileDetails(profile: profileService.profile)
+    }
+    
+    // MARK: - Public Methods
+    
+    func updateProfileDetails(profile: Profile?) {
+        guard let profile = profile else {
+            return
+        }
+        nameLabel.text = profile.name
+        loginLabel.text = profile.loginName
+        descriptionLabel.text = profile.bio
+        
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileImageService.didChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
+        updateAvatar()
     }
     
     // MARK: - IBAction
@@ -57,6 +88,20 @@ final class ProfileViewController: UIViewController {
     }
     
     // MARK: - Private Methods
+    
+    private func updateAvatar() {
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let imageURL = URL(string: profileImageURL)
+        else { return }
+        let processor = RoundCornerImageProcessor(cornerRadius: 61)
+        avatarImageView.kf.indicatorType = .activity
+        avatarImageView.kf.setImage(with: imageURL,
+                                    placeholder: UIImage(named: "Stub.png"),
+                                    options: [.processor(processor)])
+    }
+    
+    //MARK: - Creat View
     
     private func creatAvatarImageView() {
         let avatarImageView = UIImageView(image: UIImage(named: "test profile photo.png"))
