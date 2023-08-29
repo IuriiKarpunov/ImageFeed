@@ -37,8 +37,8 @@ final class SplashViewController: UIViewController  {
         
         alertPresenter = AlertPresenter(viewController: self)
         
-        if oauth2TokenStorage.token != nil {
-            fetchProfile(token: oauth2TokenStorage.token!)
+        if let token = oauth2TokenStorage.token {
+            fetchProfile(token: token)
         } else {
             switchToAuthViewController()
         }
@@ -67,9 +67,8 @@ final class SplashViewController: UIViewController  {
             title: "Что-то пошло не так(",
             message: "Не удалось войти в систему",
             buttonText: "ОК",
-            completion: { [weak self] in
-                guard let self = self else { return }
-            })
+            completion: nil
+        )
         alertPresenter?.show(model)
     }
     

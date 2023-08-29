@@ -13,7 +13,7 @@ final class ProfileImageService {
     
     static let shared = ProfileImageService()
     private let urlSession = URLSession.shared
-    static let DidChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
+    static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     
     // MARK: - Private Properties
     
@@ -45,7 +45,7 @@ final class ProfileImageService {
                     completion(.success(avatarURL))
                     NotificationCenter.default
                         .post(
-                            name: ProfileImageService.DidChangeNotification,
+                            name: ProfileImageService.didChangeNotification,
                             object: self,
                             userInfo: ["URL": avatarURL])
                     

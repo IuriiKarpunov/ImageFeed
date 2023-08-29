@@ -20,7 +20,7 @@ final class AlertPresenter: AlertPresenterProtocol {
                                       message: result.message,
                                       preferredStyle: .alert)
         let action = UIAlertAction(title: result.buttonText, style: .default) { _ in
-            result.completion()
+            result.completion?()
         }
         
         alert.addAction(action)
