@@ -7,7 +7,7 @@
 
 import Foundation
 
-private var dateFormatter: DateFormatter = {
+var dateFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateStyle = .long
     formatter.timeStyle = .none

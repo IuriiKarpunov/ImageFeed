@@ -57,14 +57,6 @@ final class OAuth2Service {
 
 extension OAuth2Service {
     
-    func photosRequest(page: Int, perPage: Int) -> URLRequest {
-        URLRequest.makeHTTPRequest(path: "/photos?"
-                                   + "page=\(page)"
-                                   + "&&per_page=\(perPage)",
-                                   httpMethod: "GET"
-        )
-    }
-    
     func likeRequest(photoId: String) -> URLRequest {
         URLRequest.makeHTTPRequest(
             path: "/photos/\(photoId)/like",

@@ -58,7 +58,9 @@ final class ProfileService {
     }
 }
 
-extension ProfileService {
+// MARK: - Private Methods
+
+private extension ProfileService {
     var selfProfileRequest: URLRequest {
         URLRequest.makeHTTPRequest(path: "/me", httpMethod: "GET")
     }

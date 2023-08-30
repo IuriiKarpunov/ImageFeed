@@ -35,6 +35,9 @@
 		4AA35D8D2A98C82B0020FB11 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA35D8C2A98C82B0020FB11 /* Kingfisher */; };
 		4AA35D952A9A2A430020FB11 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA35D942A9A2A430020FB11 /* SwiftKeychainWrapper */; };
 		4AA35D972A9A31770020FB11 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA35D962A9A31770020FB11 /* TabBarController.swift */; };
+		4AA35D992A9E19130020FB11 /* ImagesListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA35D982A9E19130020FB11 /* ImagesListService.swift */; };
+		4AA35D9B2A9E19E20020FB11 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA35D9A2A9E19E20020FB11 /* Photo.swift */; };
+		4AA35D9D2A9F31100020FB11 /* PhotoResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA35D9C2A9F31100020FB11 /* PhotoResult.swift */; };
 		4ABD5EB52A4F186E000B6B2B /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABD5EB42A4F186E000B6B2B /* UIColor.swift */; };
 		4AC1FDD32A7FD02C00D2B742 /* WebViewViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1FDD22A7FD02C00D2B742 /* WebViewViewControllerDelegate.swift */; };
 		4AC1FDD62A7FD43500D2B742 /* OAuthTokenResponseBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1FDD52A7FD43500D2B742 /* OAuthTokenResponseBody.swift */; };
@@ -72,6 +75,9 @@
 		4AA35D872A97993B0020FB11 /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
 		4AA35D892A9799820020FB11 /* AlertPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenterProtocol.swift; sourceTree = "<group>"; };
 		4AA35D962A9A31770020FB11 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		4AA35D982A9E19130020FB11 /* ImagesListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListService.swift; sourceTree = "<group>"; };
+		4AA35D9A2A9E19E20020FB11 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		4AA35D9C2A9F31100020FB11 /* PhotoResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoResult.swift; sourceTree = "<group>"; };
 		4ABD5EB42A4F186E000B6B2B /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		4AC1FDD22A7FD02C00D2B742 /* WebViewViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewControllerDelegate.swift; sourceTree = "<group>"; };
 		4AC1FDD52A7FD43500D2B742 /* OAuthTokenResponseBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthTokenResponseBody.swift; sourceTree = "<group>"; };
@@ -192,13 +198,14 @@
 			children = (
 				4AC1FDD22A7FD02C00D2B742 /* WebViewViewControllerDelegate.swift */,
 				4AC1FDDE2A810A6400D2B742 /* AuthViewControllerDelegate.swift */,
+				4AA35D892A9799820020FB11 /* AlertPresenterProtocol.swift */,
 				4AC1FDD72A7FD63900D2B742 /* OAuth2Service.swift */,
 				4AC1FDD92A7FDED300D2B742 /* OAuth2TokenStorage.swift */,
 				4A0A2B712A79238B00D32BED /* Constants.swift */,
 				4AA35D742A8A30690020FB11 /* UIBlockingProgressHUD.swift */,
 				4AA35D7A2A8F7BB00020FB11 /* ProfileService.swift */,
 				4AA35D802A9373200020FB11 /* ProfileImageService.swift */,
-				4AA35D892A9799820020FB11 /* AlertPresenterProtocol.swift */,
+				4AA35D982A9E19130020FB11 /* ImagesListService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -209,8 +216,10 @@
 				4AC1FDD52A7FD43500D2B742 /* OAuthTokenResponseBody.swift */,
 				4AA35D7C2A8F7C070020FB11 /* ProfileResult.swift */,
 				4AA35D822A9373680020FB11 /* UserResult.swift */,
+				4AA35D9C2A9F31100020FB11 /* PhotoResult.swift */,
 				4AA35D7E2A920FCB0020FB11 /* Profile.swift */,
 				4AA35D842A9798F20020FB11 /* AlertModel.swift */,
+				4AA35D9A2A9E19E20020FB11 /* Photo.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -329,14 +338,17 @@
 				4AC1FDDF2A810A6400D2B742 /* AuthViewControllerDelegate.swift in Sources */,
 				4AA35D772A8E1E5B0020FB11 /* URLRequest+Extensions.swift in Sources */,
 				4AA35D852A9798F20020FB11 /* AlertModel.swift in Sources */,
+				4AA35D9B2A9E19E20020FB11 /* Photo.swift in Sources */,
 				4ABD5EB52A4F186E000B6B2B /* UIColor.swift in Sources */,
 				4A5255B52A62BF8300682808 /* SingleImageViewController.swift in Sources */,
 				4A665E502A5185E30006681E /* ImagesListCell.swift in Sources */,
+				4AA35D9D2A9F31100020FB11 /* PhotoResult.swift in Sources */,
 				4A0887C42A4DF90700CC3998 /* AppDelegate.swift in Sources */,
 				4AC1FDD32A7FD02C00D2B742 /* WebViewViewControllerDelegate.swift in Sources */,
 				4AC1FDDA2A7FDED300D2B742 /* OAuth2TokenStorage.swift in Sources */,
 				4AA35D972A9A31770020FB11 /* TabBarController.swift in Sources */,
 				4A0887C62A4DF90700CC3998 /* SceneDelegate.swift in Sources */,
+				4AA35D992A9E19130020FB11 /* ImagesListService.swift in Sources */,
 				4A0A2B722A79238B00D32BED /* Constants.swift in Sources */,
 				4AC1FDDD2A80F39D00D2B742 /* SplashViewController.swift in Sources */,
 				4AA35D752A8A30690020FB11 /* UIBlockingProgressHUD.swift in Sources */,
