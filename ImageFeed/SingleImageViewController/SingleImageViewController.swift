@@ -11,6 +11,8 @@ final class SingleImageViewController: UIViewController {
     
     // MARK: - Public Properties
     
+    var largeImageURL: URL?
+    
     var image: UIImage! {
         didSet{
             guard isViewLoaded else { return }
@@ -36,8 +38,7 @@ final class SingleImageViewController: UIViewController {
         super.viewDidLoad()
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.25
-        imageView.image = image
-        rescaleAndCenterImageInScrollView(image: image)
+        downloadImage()
     }
     
     // MARK: - IBAction
@@ -69,6 +70,21 @@ final class SingleImageViewController: UIViewController {
         let x = (newContentSize.width - visibleRectSize.width) / 2
         let y = (newContentSize.height - visibleRectSize.height) / 2
         scrollView.setContentOffset(CGPoint(x: x, y: y), animated: false)
+    }
+    
+    private func downloadImage() {
+        imageView.kf.setImage(with: largeImageURL) { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
+            
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let image):
+                self.rescaleAndCenterImageInScrollView(image: image.image)
+            case .failure:
+                print("Erorr")
+            }
+        }
     }
 }
 

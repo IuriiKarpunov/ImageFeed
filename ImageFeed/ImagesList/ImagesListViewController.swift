@@ -9,6 +9,12 @@ import UIKit
 
 class ImagesListViewController: UIViewController {
 
+    // MARK: - Private Properties
+    
+    private var photos: [Photo] = []
+    private var imagesListService: ImagesListService?
+    private var imageServiceObserver: NSObjectProtocol?
+    
     // MARK: - Private Constants
     
     private let photosName: [String] = Array(0..<21).map{ "\($0)" }
@@ -35,10 +41,45 @@ class ImagesListViewController: UIViewController {
         if segue.identifier == showSingleImageSegueIdentifier {
             let viewController = segue.destination as! SingleImageViewController
             let indexPath = sender as! IndexPath
-            let image = UIImage(named: photosName[indexPath.row])
-            viewController.image = image
+            let image = URL(string: photos[indexPath.row].largeImageURL)
+            viewController.largeImageURL = image
         } else {
             super.prepare(for: segue, sender: sender)
+        }
+    }
+    
+    // MARK: - Public Methods
+    
+    private func updateImagesListDetails(photo: Photo?) {
+        guard let photo = photo else { return }
+        guard let imagesListService = imagesListService else { return }
+        imagesListService.fetchPhotosNextPage()
+        
+        imageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ImagesListService.DidChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateImages()
+            }
+        updateImages()
+    }
+    
+    private func updateImages() {
+        guard let imagesListService = imagesListService else { return }
+        let currentCount = photos.count
+        let newCount = imagesListService.photos.count
+        photos = imagesListService.photos
+
+        if currentCount != newCount {
+            tableView.performBatchUpdates {
+                let indexPaths = (currentCount..<newCount).map { i in
+                    IndexPath(row: i, section: 0)
+                }
+                tableView.insertRows(at: indexPaths, with: .automatic)
+            } completion: { _ in }
         }
     }
 }
@@ -47,9 +88,10 @@ class ImagesListViewController: UIViewController {
 
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        if indexPath.row + 1 == photos.count {
-//            ImagesListService().fetchPhotosNextPage()
-//        }
+        guard let imagesListService = imagesListService else { return }
+        if indexPath.row + 1 == photos.count {
+            ImagesListService().fetchPhotosNextPage()
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -74,7 +116,7 @@ extension ImagesListViewController: UITableViewDelegate {
 
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return photosName.count
+        return photos.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -85,7 +127,7 @@ extension ImagesListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        imagesListCell.configCell(photo: photosName[indexPath.row], with: indexPath)
+        imagesListCell.configCell(photoURL: photos[indexPath.row].thumbImageURL, with: indexPath)
         return imagesListCell
     }
 }

@@ -20,14 +20,16 @@ final class ImagesListCell: UITableViewCell {
     
     // MARK: - Public Methods
     
-    func configCell(photo: String, with indexPath: IndexPath) {
+    func configCell(photoURL: String, with indexPath: IndexPath) {
         gradientLayer(linearGradient)
         
-        guard let image = UIImage(named: photo) else {
+        guard let imageURL = URL(string: photoURL) else {
             return
         }
+        imageView?.kf.indicatorType = .activity
+        imageView?.kf.setImage(with: imageURL,
+                              placeholder: UIImage(named: "placeholder.png"))
         
-        cellImage.image = image
         dateLabel.text = Date().dateString
         let isLike = indexPath.row % 2 == 0
         let likeImage = isLike ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
