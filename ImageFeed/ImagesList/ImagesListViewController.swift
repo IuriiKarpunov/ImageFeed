@@ -52,6 +52,8 @@ class ImagesListViewController: UIViewController {
     
     private func updateImagesListDetails() {
         
+        imagesListService.fetchPhotosNextPage()
+        
         imageListServiceObserver = NotificationCenter.default
             .addObserver(
                 forName: ImagesListService.DidChangeNotification,
@@ -61,7 +63,7 @@ class ImagesListViewController: UIViewController {
                 guard let self = self else { return }
                 self.updateTableViewAnimated()
             }
-        imagesListService.fetchPhotosNextPage()
+        updateTableViewAnimated()
     }
     
     private func updateTableViewAnimated() {
@@ -83,7 +85,7 @@ class ImagesListViewController: UIViewController {
 
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row + 1 == photos.count {
+        if indexPath.row + 1 == imagesListService.photos.count {
             imagesListService.fetchPhotosNextPage()
         }
     }

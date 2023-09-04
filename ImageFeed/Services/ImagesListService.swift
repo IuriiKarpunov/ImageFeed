@@ -22,6 +22,8 @@ final class ImagesListService {
     private var lastLoadedPage: Int?
     private var task: URLSessionTask?
     
+    // MARK: - Public Methods
+    
     func fetchPhotosNextPage() {
         let nextPage = nextPageNumber()
         
@@ -35,15 +37,15 @@ final class ImagesListService {
         
         guard let request = request else { return }
         let task = urlSession.objectTask(for: request) { [weak self] (result: Result<[PhotoResult], Error>) in
-            guard let self = self else { return }
             DispatchQueue.main.async {
+                guard let self = self else { return }
                 switch result {
                 case .success(let body):
                     body.forEach { photo in
                         self.photos.append(Photo(
                             id: photo.id,
                             size: CGSize(width: photo.width, height: photo.height),
-                            createdAt: dateFormatter.date(from: photo.createdAt ?? ""),
+                            createdAt: photo.createdAt?.dateTimeString,
                             welcomeDescription: photo.description ?? "",
                             thumbImageURL: photo.urls.thumb,
                             largeImageURL: photo.urls.full,
@@ -58,7 +60,8 @@ final class ImagesListService {
                             object: self,
                             userInfo: ["Photos": self.photos]
                         )
-                   
+                    
+                    self.task = nil
                 case .failure(let error):
                     print("WARNING loading photo \(error)")
                 }

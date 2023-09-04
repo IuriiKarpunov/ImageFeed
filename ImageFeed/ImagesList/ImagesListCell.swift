@@ -10,6 +10,7 @@ import UIKit
 final class ImagesListCell: UITableViewCell {
     
     static let reuseIdentifier = "ImagesListCell"
+    private let imagesListService = ImagesListService.shared
     
     // MARK: - IBOutlet
     
@@ -33,7 +34,9 @@ final class ImagesListCell: UITableViewCell {
         guard let imageURL = URL(string: photoURL) else {
             return
         }
+        let date = imagesListService.photos[indexPath.row].createdAt
         let placeholder = UIImage(named: "placeholder.png")
+        
         imageView?.kf.indicatorType = .activity
         imageView?.kf.setImage(
             with: imageURL,
@@ -41,7 +44,7 @@ final class ImagesListCell: UITableViewCell {
         ) { [weak self] _ in
             guard let self = self else { return }
             
-            dateLabel.text = Date().dateString
+            dateLabel.text = date?.dateTimeString
             let isLike = indexPath.row % 2 == 0
             let likeImage = isLike ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
             likeButton.setImage(likeImage, for: .normal)

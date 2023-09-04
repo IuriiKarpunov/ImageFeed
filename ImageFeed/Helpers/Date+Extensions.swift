@@ -15,5 +15,5 @@ var dateFormatter: DateFormatter = {
 }()
 
 extension Date {
-    var dateString: String { dateFormatter.string(from: self) }
+    var dateTimeString: String { dateFormatter.string(from: self) }
 }
