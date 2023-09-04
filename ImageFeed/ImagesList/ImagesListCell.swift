@@ -36,8 +36,8 @@ final class ImagesListCell: UITableViewCell {
         let date = imagesListService.photos[indexPath.row].createdAt
         let placeholder = UIImage(named: "placeholder.png")
         
-        imageView?.kf.indicatorType = .activity
-        imageView?.kf.setImage(
+        cellImage?.kf.indicatorType = .activity
+        cellImage?.kf.setImage(
             with: imageURL,
             placeholder: placeholder
         ) { result in
