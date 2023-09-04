@@ -121,8 +121,10 @@ extension ImagesListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        imagesListCell.configCell(photoURL: photos[indexPath.row].thumbImageURL, with: indexPath)
-        tableView.reloadRows(at: [indexPath], with: .automatic)
+        let configuringCellStatus = imagesListCell.configCell(photoURL: photos[indexPath.row].thumbImageURL, with: indexPath)
+        if configuringCellStatus {
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
         return imagesListCell
     }
 }

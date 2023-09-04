@@ -28,12 +28,11 @@ final class ImagesListCell: UITableViewCell {
     
     // MARK: - Public Methods
     
-    func configCell(photoURL: String, with indexPath: IndexPath) {
+    func configCell(photoURL: String, with indexPath: IndexPath) -> Bool {
         gradientLayer(linearGradient)
         
-        guard let imageURL = URL(string: photoURL) else {
-            return
-        }
+        var status = false
+        guard let imageURL = URL(string: photoURL) else { return status }
         let date = imagesListService.photos[indexPath.row].createdAt
         let placeholder = UIImage(named: "placeholder.png")
         
@@ -41,14 +40,19 @@ final class ImagesListCell: UITableViewCell {
         imageView?.kf.setImage(
             with: imageURL,
             placeholder: placeholder
-        ) { [weak self] _ in
-            guard let self = self else { return }
-            
-            dateLabel.text = date?.dateTimeString
-            let isLike = indexPath.row % 2 == 0
-            let likeImage = isLike ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
-            likeButton.setImage(likeImage, for: .normal)
+        ) { result in
+            switch result {
+            case .success(_):
+                status = true
+            case .failure(let error):
+                print ("There's an error with placeholder picture: \(error)")
+            }
         }
+        dateLabel.text = date?.dateTimeString
+        let isLike = indexPath.row % 2 == 0
+        let likeImage = isLike ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
+        likeButton.setImage(likeImage, for: .normal)
+        return status
     }
         // MARK: - Private Methods
         
