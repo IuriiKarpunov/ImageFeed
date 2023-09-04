@@ -11,6 +11,7 @@ final class ImagesListService {
     
     // MARK: - Constants
     
+    static let shared = ImagesListService()
     private let urlSession = URLSession.shared
     private let token = OAuth2TokenStorage().token
     static let DidChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
@@ -20,10 +21,9 @@ final class ImagesListService {
     private (set) var photos: [Photo] = []
     private var lastLoadedPage: Int?
     private var task: URLSessionTask?
-    private var nextPage: Int = 1
     
     func fetchPhotosNextPage() {
-        nextPageNumber()
+        let nextPage = nextPageNumber()
         
         assert(Thread.isMainThread)
         guard task == nil else { return }
@@ -51,7 +51,7 @@ final class ImagesListService {
                         )
                         )
                     }
-                    self.lastLoadedPage = self.nextPage
+                    self.lastLoadedPage = nextPage
                     NotificationCenter.default
                         .post(
                             name: ImagesListService.DidChangeNotification,
@@ -82,10 +82,7 @@ private extension ImagesListService {
     }
     
     func nextPageNumber() -> Int {
-        guard let lastLoadedPage = lastLoadedPage else {
-            return nextPage
-        }
-        nextPage = lastLoadedPage + 1
-        return nextPage
+        guard let lastLoadedPage = lastLoadedPage else { return 1 }
+        return lastLoadedPage + 1
     }
 }

@@ -12,12 +12,11 @@ class ImagesListViewController: UIViewController {
     // MARK: - Private Properties
     
     private var photos: [Photo] = []
-    private var imagesListService: ImagesListService?
-    private var imageServiceObserver: NSObjectProtocol?
+    private var imagesListService = ImagesListService.shared
+    private var imageListServiceObserver: NSObjectProtocol?
     
     // MARK: - Private Constants
-    
-    private let photosName: [String] = Array(0..<21).map{ "\($0)" }
+   
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
     
     // MARK: - IBOutlet
@@ -35,6 +34,7 @@ class ImagesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
+        updateImagesListDetails()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -50,32 +50,27 @@ class ImagesListViewController: UIViewController {
     
     // MARK: - Public Methods
     
-    private func updateImagesListDetails(photo: Photo?) {
-        guard let photo = photo else { return }
-        guard let imagesListService = imagesListService else { return }
-        imagesListService.fetchPhotosNextPage()
+    private func updateImagesListDetails() {
         
-        imageServiceObserver = NotificationCenter.default
+        imageListServiceObserver = NotificationCenter.default
             .addObserver(
                 forName: ImagesListService.DidChangeNotification,
                 object: nil,
                 queue: .main
             ) { [weak self] _ in
                 guard let self = self else { return }
-                self.updateImages()
+                self.updateTableViewAnimated()
             }
-        updateImages()
+        imagesListService.fetchPhotosNextPage()
     }
     
-    private func updateImages() {
-        guard let imagesListService = imagesListService else { return }
-        let currentCount = photos.count
+    private func updateTableViewAnimated() {
+        let oldCount = photos.count
         let newCount = imagesListService.photos.count
         photos = imagesListService.photos
-
-        if currentCount != newCount {
+        if oldCount != newCount {
             tableView.performBatchUpdates {
-                let indexPaths = (currentCount..<newCount).map { i in
+                let indexPaths = (oldCount..<newCount).map { i in
                     IndexPath(row: i, section: 0)
                 }
                 tableView.insertRows(at: indexPaths, with: .automatic)
@@ -88,9 +83,8 @@ class ImagesListViewController: UIViewController {
 
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let imagesListService = imagesListService else { return }
         if indexPath.row + 1 == photos.count {
-            ImagesListService().fetchPhotosNextPage()
+            imagesListService.fetchPhotosNextPage()
         }
     }
     
@@ -99,9 +93,7 @@ extension ImagesListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let image = UIImage(named: photosName[indexPath.row]) else {
-            return 0
-        }
+        let image = photos[indexPath.row]
         
         let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
         let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
@@ -128,6 +120,7 @@ extension ImagesListViewController: UITableViewDataSource {
         }
         
         imagesListCell.configCell(photoURL: photos[indexPath.row].thumbImageURL, with: indexPath)
+        tableView.reloadRows(at: [indexPath], with: .automatic)
         return imagesListCell
     }
 }
