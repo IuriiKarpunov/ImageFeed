@@ -21,3 +21,11 @@ struct UrlsResult: Codable {
     let full: String
     let thumb: String
 }
+
+struct PhotoLikeResult: Codable {
+    let photo: LikeResult
+}
+
+struct LikeResult: Codable {
+    let likedByUser: Bool
+}

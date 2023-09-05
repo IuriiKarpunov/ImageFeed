@@ -54,6 +54,12 @@ final class ImagesListCell: UITableViewCell {
         likeButton.setImage(likeImage, for: .normal)
         return status
     }
+    
+    // MARK: - IBAction
+    
+    @IBAction func didTapLikeButton(_ sender: Any) {
+    }
+    
         // MARK: - Private Methods
         
         private func gradientLayer(_ view: UIView) {

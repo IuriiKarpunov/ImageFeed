@@ -185,6 +185,9 @@
                                                     <state key="normal" image="like_button_on">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="didTapLikeButton:" destination="Mjd-nV-q42" eventType="touchUpInside" id="6ga-cn-3Ay"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="26 августа 2022" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ckY-Pv-nBb" userLabel="dateLabel">
                                                     <rect key="frame" x="24" y="196" width="103" height="16"/>

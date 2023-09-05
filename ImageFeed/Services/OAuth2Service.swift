@@ -57,20 +57,6 @@ final class OAuth2Service {
 
 extension OAuth2Service {
     
-    func likeRequest(photoId: String) -> URLRequest {
-        URLRequest.makeHTTPRequest(
-            path: "/photos/\(photoId)/like",
-            httpMethod: "POST"
-        )
-    }
-    
-    func unlikeRequest(photoId: String) -> URLRequest {
-        URLRequest.makeHTTPRequest(
-            path: "/photos/\(photoId)/like",
-            httpMethod: "DELETE"
-        )
-    }
-    
     func authTokenRequest(code: String) -> URLRequest {
         URLRequest.makeHTTPRequest(
             path: "/oauth/token"
