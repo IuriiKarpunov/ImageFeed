@@ -79,10 +79,10 @@ final class SingleImageViewController: UIViewController {
             guard let self = self else { return }
             
             switch result {
-            case .success(let image):
-                self.rescaleAndCenterImageInScrollView(image: image.image)
+            case .success(let imageResult):
+                self.rescaleAndCenterImageInScrollView(image: imageResult.image)
             case .failure:
-                print("Erorr")
+                print("Erorr") // Alert Добавьте также функцию showError(), которая показывает алерт об ошибке с текстом «Что-то пошло не так. Попробовать ещё раз?» и с кнопками «Не надо» (скрывает алерт) и «Повторить» (повторно выполняет kt.setImage — используйте блок кода выше; его можно положить в отдельную функцию и вызвать её при нажатии на «Повторить»).
             }
         }
     }

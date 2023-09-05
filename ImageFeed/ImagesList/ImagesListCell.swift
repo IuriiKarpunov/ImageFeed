@@ -9,6 +9,9 @@ import UIKit
 
 final class ImagesListCell: UITableViewCell {
     
+    //MARK: - Variables
+    
+    weak var delegate: ImagesListCellDelegate?
     static let reuseIdentifier = "ImagesListCell"
     private let imagesListService = ImagesListService.shared
     
@@ -49,30 +52,33 @@ final class ImagesListCell: UITableViewCell {
             }
         }
         dateLabel.text = date?.dateTimeString
-        let isLike = indexPath.row % 2 == 0
-        let likeImage = isLike ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
-        likeButton.setImage(likeImage, for: .normal)
         return status
+    }
+    
+    func setIsLiked(isLiked: Bool) {
+        let likeImage = isLiked ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
+        likeButton.setImage(likeImage, for: .normal)
     }
     
     // MARK: - IBAction
     
-    @IBAction func didTapLikeButton(_ sender: Any) {
+    @IBAction private func likeButtonClicked(_ sender: Any) {
+        delegate?.imageListCellDidTapLike(self)
     }
     
-        // MARK: - Private Methods
+    // MARK: - Private Methods
+    
+    private func gradientLayer(_ view: UIView) {
+        let gradientLayer = CAGradientLayer()
+        let startColor: UIColor = UIColor(red: 0.26, green: 0.27, blue: 0.34, alpha: 0.00)
+        let endColor: UIColor = UIColor(red: 0.26, green: 0.27, blue: 0.34, alpha: 0.20)
+        let gradientColors: [CGColor] = [startColor.cgColor, endColor.cgColor]
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = gradientColors
         
-        private func gradientLayer(_ view: UIView) {
-            let gradientLayer = CAGradientLayer()
-            let startColor: UIColor = UIColor(red: 0.26, green: 0.27, blue: 0.34, alpha: 0.00)
-            let endColor: UIColor = UIColor(red: 0.26, green: 0.27, blue: 0.34, alpha: 0.20)
-            let gradientColors: [CGColor] = [startColor.cgColor, endColor.cgColor]
-            gradientLayer.frame = view.bounds
-            gradientLayer.colors = gradientColors
-            
-            view.backgroundColor = UIColor.clear
-            view.layer.insertSublayer(gradientLayer, at: 0)
-            
-            view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        }
+        view.backgroundColor = UIColor.clear
+        view.layer.insertSublayer(gradientLayer, at: 0)
+        
+        view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
     }
+}

@@ -73,18 +73,15 @@ final class ProfileViewController: UIViewController {
     
     @objc
     private func didTapLogoutButton() {
-        avatarImageView.image = UIImage(named: "Stub.png")
-        nameLabel.removeFromSuperview()
-        nameLabel = nil
-        loginLabel.removeFromSuperview()
-        loginLabel = nil
-        descriptionLabel.removeFromSuperview()
-        descriptionLabel = nil
-        NSLayoutConstraint.activate([
-            favoritesLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
-            favoritesLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 102)
-        ])
-        logoutButton.isEnabled = false
+        OAuth2TokenStorage().token = nil
+        WebViewViewController.clean()
+        
+        guard let window = UIApplication.shared.windows.first else {
+            fatalError("Invalid Configuration")
+        }
+        let authViewController = UIStoryboard(name: "Main", bundle: .main)
+            .instantiateViewController(identifier: "AuthViewController")
+        window.rootViewController = authViewController
     }
     
     // MARK: - Private Methods

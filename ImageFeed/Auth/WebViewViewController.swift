@@ -30,6 +30,17 @@ final class WebViewViewController: UIViewController {
         webView.navigationDelegate = self
     }
     
+    // MARK: - Public Methods
+    
+    static func clean() {
+       HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+       WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+          records.forEach { record in
+             WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
+          }
+       }
+    }
+    
     // MARK: - IBAction
     
     @IBAction func didTapBackButton(_ sender: Any) {
