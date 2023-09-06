@@ -23,9 +23,5 @@ struct UrlsResult: Codable {
 }
 
 struct PhotoLikeResult: Codable {
-    let photo: LikeResult
-}
-
-struct LikeResult: Codable {
-    let likedByUser: Bool
+    let photo: PhotoResult?
 }

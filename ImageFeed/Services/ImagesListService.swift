@@ -78,7 +78,7 @@ final class ImagesListService {
         task?.cancel()
         
         guard let token = token else { return }
-        var requestLike: URLRequest? = isLike ? likeRequest(photoId: photoId) : unlikeRequest(photoId: photoId)
+        var requestLike: URLRequest? = isLike ? unlikeRequest(photoId: photoId) : likeRequest(photoId: photoId)
         requestLike?.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
         guard let requestLike = requestLike else { return }
@@ -87,7 +87,7 @@ final class ImagesListService {
                 guard let self = self else { return }
                 switch result {
                 case .success(let body):
-                    let likedByUser = body.photo.likedByUser
+                    let likedByUser = body.photo?.likedByUser ?? false
                     if let index = self.photos.firstIndex(where: { $0.id == photoId}) {
                         let photo = self.photos[index]
                         let newPhoto = Photo(
