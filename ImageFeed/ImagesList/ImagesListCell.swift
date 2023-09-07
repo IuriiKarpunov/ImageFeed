@@ -45,10 +45,10 @@ final class ImagesListCell: UITableViewCell {
             placeholder: placeholder
         ) { result in
             switch result {
-            case .success(_):
+            case .success:
                 status = true
-            case .failure(let error):
-                print ("There's an error with placeholder picture: \(error)")
+            case .failure:
+                self.cellImage.image = placeholder
             }
         }
         dateLabel.text = date?.dateTimeString

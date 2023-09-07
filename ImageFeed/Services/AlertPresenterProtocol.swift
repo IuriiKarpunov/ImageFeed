@@ -8,5 +8,6 @@
 import Foundation
 
 protocol AlertPresenterProtocol: AnyObject {
-    func show(_ result: AlertModel)
+    func show(_ result: AlertModelOneButton)
+    func showTwoButton(_ result: AlertModelTwoButton)
 }

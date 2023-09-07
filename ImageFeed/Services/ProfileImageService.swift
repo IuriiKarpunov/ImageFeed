@@ -57,9 +57,13 @@ final class ProfileImageService {
         task.resume()
     }
     
+    func cleanProfileImageURL() {
+        avatarURL = nil
+        task = nil
+    }
 }
 
-// MARK: - Private Methods
+    // MARK: - Private Methods
 
 private extension ProfileImageService {
     func profileImageURLRequest(username: String) -> URLRequest {

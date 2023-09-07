@@ -15,7 +15,7 @@ final class AlertPresenter: AlertPresenterProtocol {
         self.viewController = viewController
     }
     
-    func show(_ result: AlertModel) {
+    func show(_ result: AlertModelOneButton) {
         let alert = UIAlertController(title: result.title,
                                       message: result.message,
                                       preferredStyle: .alert)
@@ -25,5 +25,21 @@ final class AlertPresenter: AlertPresenterProtocol {
         
         alert.addAction(action)
         viewController?.presentedViewController?.present(alert, animated: true, completion: nil)
+    }
+    
+    func showTwoButton(_ result: AlertModelTwoButton) {
+        let alertTwoButton = UIAlertController(title: result.title,
+                                               message: result.message,
+                                               preferredStyle: .alert)
+        let action1 = UIAlertAction(title: result.buttonText, style: .default) { _ in
+            result.completion?()
+        }
+        let action2 = UIAlertAction(title: result.buttonText2, style: .default) { _ in
+            result.completion2?()
+        }
+        
+        alertTwoButton.addAction(action1)
+        alertTwoButton.addAction(action2)
+        viewController?.present(alertTwoButton, animated: true, completion: nil)
     }
 }

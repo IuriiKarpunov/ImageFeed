@@ -7,9 +7,18 @@
 
 import UIKit
 
-struct AlertModel {
+struct AlertModelOneButton {
     let title: String
     let message: String
     let buttonText: String
     let completion: (() -> Void)?
+}
+
+struct AlertModelTwoButton {
+    let title: String
+    let message: String
+    let buttonText: String
+    let buttonText2: String
+    let completion: (() -> Void)?
+    let completion2: (() -> Void)?
 }

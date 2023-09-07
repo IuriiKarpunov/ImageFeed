@@ -26,6 +26,10 @@ final class SingleImageViewController: UIViewController {
     @IBOutlet private var imageView: UIImageView!
     @IBOutlet private var scrollView: UIScrollView!
     
+    // MARK: - Private Properties
+    
+    private var alertPresenter: AlertPresenterProtocol?
+    
     // MARK: - UIStatusBarStyle
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -39,6 +43,7 @@ final class SingleImageViewController: UIViewController {
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.25
         downloadImage()
+        alertPresenter = AlertPresenter(viewController: self)
     }
     
     // MARK: - IBAction
@@ -73,6 +78,7 @@ final class SingleImageViewController: UIViewController {
     }
     
     private func downloadImage() {
+        UIBlockingProgressHUD.show()
         imageView.kf.setImage(with: largeImageURL) { [weak self] result in
             UIBlockingProgressHUD.dismiss()
             
@@ -82,13 +88,27 @@ final class SingleImageViewController: UIViewController {
             case .success(let imageResult):
                 self.rescaleAndCenterImageInScrollView(image: imageResult.image)
             case .failure:
-                print("Erorr") // Alert Добавьте также функцию showError(), которая показывает алерт об ошибке с текстом «Что-то пошло не так. Попробовать ещё раз?» и с кнопками «Не надо» (скрывает алерт) и «Повторить» (повторно выполняет kt.setImage — используйте блок кода выше; его можно положить в отдельную функцию и вызвать её при нажатии на «Повторить»).
+                showError()
             }
         }
     }
+    
+    private func showError() {
+        let model = AlertModelTwoButton(
+            title: "Что-то пошло не так.",
+            message: "Попробовать ещё раз?",
+            buttonText: "Не надо",
+            buttonText2: "Повторить",
+            completion: nil,
+            completion2: { [weak self] in
+                guard let self = self else { return }
+                downloadImage()
+            })
+        alertPresenter?.showTwoButton(model)
+    }
 }
 
-// MARK: - UIScrollViewDelegate
+    // MARK: - UIScrollViewDelegate
 
 extension SingleImageViewController: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {

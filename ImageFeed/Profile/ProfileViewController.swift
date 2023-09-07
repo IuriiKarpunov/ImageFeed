@@ -13,6 +13,8 @@ final class ProfileViewController: UIViewController {
     // MARK: - Private Constants
     
     private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
+    private let imagesListService = ImagesListService.shared
     
     // MARK: - Subview Properties
     
@@ -24,6 +26,7 @@ final class ProfileViewController: UIViewController {
     private var favoritesLabel: UILabel!
     private var logoutButton: UIButton!
     private var profileImageServiceObserver: NSObjectProtocol?
+    private var alertPresenter: AlertPresenterProtocol?
     
     // MARK: - UIStatusBarStyle
     
@@ -45,6 +48,7 @@ final class ProfileViewController: UIViewController {
         creatLogoutButton()
         
         updateProfileDetails(profile: profileService.profile)
+        alertPresenter = AlertPresenter(viewController: self)
     }
     
     // MARK: - Public Methods
@@ -73,15 +77,7 @@ final class ProfileViewController: UIViewController {
     
     @objc
     private func didTapLogoutButton() {
-        OAuth2TokenStorage().token = nil
-        WebViewViewController.clean()
-        
-        guard let window = UIApplication.shared.windows.first else {
-            fatalError("Invalid Configuration")
-        }
-        let authViewController = UIStoryboard(name: "Main", bundle: .main)
-            .instantiateViewController(identifier: "AuthViewController")
-        window.rootViewController = authViewController
+        showAlertExitProfile()
     }
     
     // MARK: - Private Methods
@@ -96,6 +92,40 @@ final class ProfileViewController: UIViewController {
         avatarImageView.kf.setImage(with: imageURL,
                                     placeholder: UIImage(named: "Stub.png"),
                                     options: [.processor(processor)])
+    }
+    
+    private func exitProfile() {
+        OAuth2TokenStorage().token = nil
+        WebViewViewController.clean()
+        cleanService()
+        
+        guard let window = UIApplication.shared.windows.first else {
+            return assertionFailure("Invalid Configuration")
+        }
+//        let splashViewController = UIStoryboard(name: "Main", bundle: .main)
+//            .instantiateViewController(identifier: "SplashViewControllerIdentifier") as? SplashViewController
+        window.rootViewController = SplashViewController()
+    }
+    
+    private func showAlertExitProfile() {
+        let model = AlertModelTwoButton(
+            title: "Пока, пока!",
+            message: "Уверены что хотите выйти?",
+            buttonText: "Да",
+            buttonText2: "Нет",
+            completion: { [weak self] in
+                guard let self = self else { return }
+                exitProfile()
+            },
+            completion2: nil
+        )
+        alertPresenter?.showTwoButton(model)
+    }
+    
+    private func cleanService() {
+        profileService.cleanProfile()
+        profileImageService.cleanProfileImageURL()
+        imagesListService.cleanImagesList()
     }
     
     //MARK: - Creat View

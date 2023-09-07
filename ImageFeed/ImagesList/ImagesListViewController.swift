@@ -8,15 +8,16 @@
 import UIKit
 
 class ImagesListViewController: UIViewController {
-
+    
     // MARK: - Private Properties
     
     private var photos: [Photo] = []
     private var imagesListService = ImagesListService.shared
     private var imageListServiceObserver: NSObjectProtocol?
+    private var alertPresenter: AlertPresenterProtocol?
     
     // MARK: - Private Constants
-   
+    
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
     
     // MARK: - IBOutlet
@@ -35,6 +36,7 @@ class ImagesListViewController: UIViewController {
         super.viewDidLoad()
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         updateImagesListDetails()
+        alertPresenter = AlertPresenter(viewController: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -48,7 +50,7 @@ class ImagesListViewController: UIViewController {
         }
     }
     
-    // MARK: - Public Methods
+    // MARK: - Private Methods
     
     private func updateImagesListDetails() {
         
@@ -78,6 +80,16 @@ class ImagesListViewController: UIViewController {
                 tableView.insertRows(at: indexPaths, with: .automatic)
             } completion: { _ in }
         }
+    }
+    
+    private func showError() {
+        let model = AlertModelOneButton(
+            title: "Что-то пошло не так.",
+            message: "Попробуйте ещё раз.",
+            buttonText: "ОК",
+            completion: nil
+        )
+        alertPresenter?.show(model)
     }
 }
 
@@ -119,16 +131,16 @@ extension ImagesListViewController: ImagesListCellDelegate {
             photoId: photo.id,
             isLike: photo.isLiked) { result in
                 
-            switch result {
-            case .success:
-                self.photos = self.imagesListService.photos
-                cell.setIsLiked(isLiked: self.photos[indexPath.row].isLiked)
-                UIBlockingProgressHUD.dismiss()
-            case .failure:
-                UIBlockingProgressHUD.dismiss()
-                // Alert!
+                switch result {
+                case .success:
+                    self.photos = self.imagesListService.photos
+                    cell.setIsLiked(isLiked: self.photos[indexPath.row].isLiked)
+                    UIBlockingProgressHUD.dismiss()
+                case .failure:
+                    UIBlockingProgressHUD.dismiss()
+                    self.showError()
+                }
             }
-        }
     }
 }
 

@@ -63,7 +63,7 @@ final class SplashViewController: UIViewController  {
     }
     
     private func showAlertNetworkError() {
-        let model = AlertModel(
+        let model = AlertModelOneButton(
             title: "Что-то пошло не так(",
             message: "Не удалось войти в систему",
             buttonText: "ОК",
@@ -88,7 +88,7 @@ final class SplashViewController: UIViewController  {
     }
 }
 
-//MARK: - AuthViewControllerDelegate
+    //MARK: - AuthViewControllerDelegate
 
 extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {

@@ -42,15 +42,16 @@ final class ImagesListService {
                 switch result {
                 case .success(let body):
                     body.forEach { photo in
-                        self.photos.append(Photo(
-                            id: photo.id,
-                            size: CGSize(width: photo.width, height: photo.height),
-                            createdAt: photo.createdAt?.dateTimeString,
-                            welcomeDescription: photo.description ?? "",
-                            thumbImageURL: photo.urls.thumb,
-                            largeImageURL: photo.urls.full,
-                            isLiked: photo.likedByUser
-                        )
+                        self.photos.append(
+                            Photo(
+                                id: photo.id,
+                                size: CGSize(width: photo.width, height: photo.height),
+                                createdAt: photo.createdAt?.dateTimeString,
+                                welcomeDescription: photo.description ?? "",
+                                thumbImageURL: photo.urls.thumb,
+                                largeImageURL: photo.urls.full,
+                                isLiked: photo.likedByUser
+                            )
                         )
                     }
                     self.lastLoadedPage = nextPage
@@ -63,7 +64,7 @@ final class ImagesListService {
                     
                     self.task = nil
                 case .failure(let error):
-                    print("WARNING loading photo \(error)")
+                    assertionFailure("WARNING loading photo \(error)")
                 }
             }
         }
@@ -105,16 +106,21 @@ final class ImagesListService {
                     self.task = nil
                 case .failure(let error):
                     completion(.failure(error))
-                    print("WARNING loading liked \(error)")
                 }
             }
         }
         self.task = task
         task.resume()
     }
+    
+    func cleanImagesList() {
+        photos = []
+        lastLoadedPage = nil
+        task = nil
+    }
 }
 
-// MARK: - Private Methods
+    // MARK: - Private Methods
 
 private extension ImagesListService {
     func photosRequest(page: Int, perPage: Int) -> URLRequest {
