@@ -43,15 +43,15 @@ final class AlertPresenter: AlertPresenterProtocol {
         let alertTwoButton = UIAlertController(title: result.title,
                                                message: result.message,
                                                preferredStyle: .alert)
-        let action1 = UIAlertAction(title: result.buttonText, style: .default) { _ in
-            result.completion?()
+        let actionOne = UIAlertAction(title: result.buttonTextOne, style: .default) { _ in
+            result.completionOne?()
         }
-        let action2 = UIAlertAction(title: result.buttonText2, style: .default) { _ in
-            result.completion2?()
+        let actionTwo = UIAlertAction(title: result.buttonTextTwo, style: .default) { _ in
+            result.completionTwo?()
         }
         
-        alertTwoButton.addAction(action1)
-        alertTwoButton.addAction(action2)
+        alertTwoButton.addAction(actionOne)
+        alertTwoButton.addAction(actionTwo)
         viewController?.present(alertTwoButton, animated: true, completion: nil)
     }
 }

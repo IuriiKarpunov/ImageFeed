@@ -13,14 +13,6 @@ final class SingleImageViewController: UIViewController {
     
     var largeImageURL: URL?
     
-    var image: UIImage! {
-        didSet{
-            guard isViewLoaded else { return }
-            imageView.image = image
-            rescaleAndCenterImageInScrollView(image: image)
-        }
-    }
-    
     // MARK: - IBOutlet
     
     @IBOutlet private var imageView: UIImageView!
@@ -29,6 +21,13 @@ final class SingleImageViewController: UIViewController {
     // MARK: - Private Properties
     
     private var alertPresenter: AlertPresenterProtocol?
+    private var image: UIImage! {
+        didSet{
+            guard isViewLoaded else { return }
+            imageView.image = image
+            rescaleAndCenterImageInScrollView(image: image)
+        }
+    }
     
     // MARK: - UIStatusBarStyle
     
@@ -87,6 +86,7 @@ final class SingleImageViewController: UIViewController {
             switch result {
             case .success(let imageResult):
                 self.rescaleAndCenterImageInScrollView(image: imageResult.image)
+                self.image = imageResult.image
             case .failure:
                 showError()
             }
@@ -97,10 +97,10 @@ final class SingleImageViewController: UIViewController {
         let model = AlertModelTwoButton(
             title: "Что-то пошло не так.",
             message: "Попробовать ещё раз?",
-            buttonText: "Не надо",
-            buttonText2: "Повторить",
-            completion: nil,
-            completion2: { [weak self] in
+            buttonTextOne: "Не надо",
+            buttonTextTwo: "Повторить",
+            completionOne: nil,
+            completionTwo: { [weak self] in
                 guard let self = self else { return }
                 downloadImage()
             })
@@ -108,7 +108,7 @@ final class SingleImageViewController: UIViewController {
     }
 }
 
-    // MARK: - UIScrollViewDelegate
+// MARK: - UIScrollViewDelegate
 
 extension SingleImageViewController: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {

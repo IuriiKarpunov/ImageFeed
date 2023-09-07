@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ImagesListViewController: UIViewController {
+final class ImagesListViewController: UIViewController {
     
     // MARK: - Private Properties
     
@@ -41,8 +41,14 @@ class ImagesListViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showSingleImageSegueIdentifier {
-            let viewController = segue.destination as! SingleImageViewController
-            let indexPath = sender as! IndexPath
+            let viewController = segue.destination as? SingleImageViewController
+            let indexPath = sender as? IndexPath
+            
+            guard let viewController = viewController,
+                  let indexPath = indexPath else {
+                return
+            }
+            
             let image = URL(string: photos[indexPath.row].largeImageURL)
             viewController.largeImageURL = image
         } else {
@@ -58,7 +64,7 @@ class ImagesListViewController: UIViewController {
         
         imageListServiceObserver = NotificationCenter.default
             .addObserver(
-                forName: ImagesListService.DidChangeNotification,
+                forName: ImagesListService.didChangeNotification,
                 object: nil,
                 queue: .main
             ) { [weak self] _ in
@@ -129,8 +135,8 @@ extension ImagesListViewController: ImagesListCellDelegate {
         
         imagesListService.changeLike(
             photoId: photo.id,
-            isLike: photo.isLiked) { result in
-                
+            isLike: photo.isLiked) { [weak self] result in
+                guard let self = self else { return }
                 switch result {
                 case .success:
                     self.photos = self.imagesListService.photos
@@ -148,7 +154,7 @@ extension ImagesListViewController: ImagesListCellDelegate {
 
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return photos.count
+        photos.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -161,7 +167,9 @@ extension ImagesListViewController: UITableViewDataSource {
         
         imagesListCell.delegate = self
         
-        let configuringCellStatus = imagesListCell.configCell(photoURL: photos[indexPath.row].thumbImageURL, with: indexPath)
+        let photo = photos[indexPath.row]
+        let configuringCellStatus = imagesListCell.configCell(photoURL: photo.thumbImageURL, with: indexPath)
+        imagesListCell.setIsLiked(isLiked: photo.isLiked)
         if configuringCellStatus {
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }

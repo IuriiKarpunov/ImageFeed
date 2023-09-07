@@ -18,15 +18,81 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Subview Properties
     
-    private var avatarImageView: UIImageView!
-    private var noPhotoImageView: UIImageView!
-    private var nameLabel: UILabel!
-    private var loginLabel: UILabel!
-    private var descriptionLabel: UILabel!
-    private var favoritesLabel: UILabel!
-    private var logoutButton: UIButton!
     private var profileImageServiceObserver: NSObjectProtocol?
     private var alertPresenter: AlertPresenterProtocol?
+    
+    //MARK: - Layout variables
+    
+    private let avatarImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "test profile photo.png"))
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.cornerRadius = 35
+        imageView.clipsToBounds = true
+        
+        return imageView
+    }()
+    
+    private let nameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Екатерина Новикова"
+        label.textColor = .ypWhite
+        label.font = UIFont.boldSystemFont(ofSize: 23)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    
+    private let loginLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "@ekaterina_nov"
+        label.textColor = .ypGray
+        label.font = UIFont.systemFont(ofSize: 13)
+        
+        return label
+    }()
+    
+    private let descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Hello, world!"
+        label.textColor = .ypWhite
+        label.font = UIFont.systemFont(ofSize: 13)
+        
+        return label
+    }()
+    
+    private let favoritesLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Избранное"
+        label.textColor = .ypWhite
+        label.font = UIFont.boldSystemFont(ofSize: 23)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    
+    private let noPhotoImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "No Photo.png"))
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return imageView
+    }()
+    
+    private let logoutButton: UIButton = {
+        let button = UIButton(type: .custom)
+        let image = UIImage(named: "Exit.png")
+        button.setImage(image, for: .normal)
+        button.addTarget(
+            ProfileViewController.self,
+            action: #selector(didTapLogoutButton),
+            for: .touchUpInside
+        )
+        button.tintColor = .ypRed
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
+    }()
     
     // MARK: - UIStatusBarStyle
     
@@ -39,13 +105,8 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypBlack
-        creatAvatarImageView()
-        creatNameLabel()
-        creatLoginLabel()
-        creatDescriptionLabel()
-        creatFavoritesLabel()
-        creatNoPhotoImageView()
-        creatLogoutButton()
+        addSubViews()
+        applyConstraints()
         
         updateProfileDetails(profile: profileService.profile)
         alertPresenter = AlertPresenter(viewController: self)
@@ -109,13 +170,13 @@ final class ProfileViewController: UIViewController {
         let model = AlertModelTwoButton(
             title: "Пока, пока!",
             message: "Уверены что хотите выйти?",
-            buttonText: "Да",
-            buttonText2: "Нет",
-            completion: { [weak self] in
+            buttonTextOne: "Да",
+            buttonTextTwo: "Нет",
+            completionOne: { [weak self] in
                 guard let self = self else { return }
                 exitProfile()
             },
-            completion2: nil
+            completionTwo: nil
         )
         alertPresenter?.showTwoButton(model)
     }
@@ -126,105 +187,44 @@ final class ProfileViewController: UIViewController {
         imagesListService.cleanImagesList()
     }
     
-    //MARK: - Creat View
-    
-    private func creatAvatarImageView() {
-        let avatarImageView = UIImageView(image: UIImage(named: "test profile photo.png"))
-        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
+    private func addSubViews() {
         view.addSubview(avatarImageView)
+        view.addSubview(nameLabel)
+        view.addSubview(loginLabel)
+        view.addSubview(descriptionLabel)
+        view.addSubview(favoritesLabel)
+        view.addSubview(noPhotoImageView)
+        view.addSubview(logoutButton)
+    }
+    
+    private func applyConstraints() {
         NSLayoutConstraint.activate([
             avatarImageView.heightAnchor.constraint(equalToConstant: 70),
             avatarImageView.widthAnchor.constraint(equalToConstant: 70),
             avatarImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            avatarImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32)
-        ])
-        self.avatarImageView = avatarImageView
-    }
-    
-    private func creatNameLabel() {
-        let nameLabel = UILabel()
-        nameLabel.text = "Екатерина Новикова"
-        nameLabel.textColor = .ypWhite
-        nameLabel.font = UIFont.boldSystemFont(ofSize: 23)
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(nameLabel)
-        NSLayoutConstraint.activate([
+            avatarImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
+            
             nameLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
-            nameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 8)
-        ])
-        self.nameLabel = nameLabel
-    }
-    
-    private func creatLoginLabel() {
-        let loginLabel = UILabel()
-        loginLabel.text = "@ekaterina_nov"
-        loginLabel.textColor = .ypGray
-        loginLabel.font = UIFont.systemFont(ofSize: 13)
-        loginLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(loginLabel)
-        NSLayoutConstraint.activate([
+            nameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 8),
+            
             loginLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
-            loginLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8)
-        ])
-        self.loginLabel = loginLabel
-    }
-    
-    private func creatDescriptionLabel() {
-        let descriptionLabel = UILabel()
-        descriptionLabel.text = "Hello, world!"
-        descriptionLabel.textColor = .ypWhite
-        descriptionLabel.font = UIFont.systemFont(ofSize: 13)
-        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(descriptionLabel)
-        NSLayoutConstraint.activate([
+            loginLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
+            
             descriptionLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
-            descriptionLabel.topAnchor.constraint(equalTo: loginLabel.bottomAnchor, constant: 8)
-        ])
-        self.descriptionLabel = descriptionLabel
-    }
-    
-    private func creatFavoritesLabel() {
-        let favoritesLabel = UILabel()
-        favoritesLabel.text = "Избранное"
-        favoritesLabel.textColor = .ypWhite
-        favoritesLabel.font = UIFont.boldSystemFont(ofSize: 23)
-        favoritesLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(favoritesLabel)
-        NSLayoutConstraint.activate([
+            descriptionLabel.topAnchor.constraint(equalTo: loginLabel.bottomAnchor, constant: 8),
+            
             favoritesLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
-            favoritesLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 24)
-        ])
-        self.favoritesLabel = favoritesLabel
-    }
-    
-    private func creatNoPhotoImageView() {
-        let noPhotoImageView = UIImageView(image: UIImage(named: "No Photo.png"))
-        noPhotoImageView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(noPhotoImageView)
-        NSLayoutConstraint.activate([
+            favoritesLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 24),
+            
             noPhotoImageView.heightAnchor.constraint(equalToConstant: 115),
             noPhotoImageView.widthAnchor.constraint(equalToConstant: 115),
             noPhotoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            noPhotoImageView.topAnchor.constraint(equalTo: favoritesLabel.bottomAnchor, constant: 110)
-        ])
-        self.noPhotoImageView = noPhotoImageView
-    }
-    
-    private func creatLogoutButton() {
-        let logoutButton = UIButton.systemButton(
-            with: UIImage(named: "Exit.png")!,
-            target: self,
-            action: #selector(Self.didTapLogoutButton)
-        )
-        logoutButton.tintColor = .ypRed
-        logoutButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(logoutButton)
-        NSLayoutConstraint.activate([
+            noPhotoImageView.topAnchor.constraint(equalTo: favoritesLabel.bottomAnchor, constant: 110),
+            
             logoutButton.heightAnchor.constraint(equalToConstant: 44),
             logoutButton.widthAnchor.constraint(equalToConstant: 44),
             logoutButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             logoutButton.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor)
         ])
-        self.logoutButton = logoutButton
     }
 }

@@ -43,7 +43,8 @@ final class ImagesListCell: UITableViewCell {
         cellImage?.kf.setImage(
             with: imageURL,
             placeholder: placeholder
-        ) { result in
+        ) { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success:
                 status = true
@@ -56,7 +57,7 @@ final class ImagesListCell: UITableViewCell {
     }
     
     func setIsLiked(isLiked: Bool) {
-        let likeImage = isLiked ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
+        let likeImage = UIImage(named: isLiked ? "like_button_on" : "like_button_off")
         likeButton.setImage(likeImage, for: .normal)
     }
     

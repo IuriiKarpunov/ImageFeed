@@ -14,7 +14,7 @@ final class ImagesListService {
     static let shared = ImagesListService()
     private let urlSession = URLSession.shared
     private let token = OAuth2TokenStorage().token
-    static let DidChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
+    static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
     
     // MARK: - Private Properties
     
@@ -40,24 +40,14 @@ final class ImagesListService {
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 switch result {
-                case .success(let body):
-                    body.forEach { photo in
-                        self.photos.append(
-                            Photo(
-                                id: photo.id,
-                                size: CGSize(width: photo.width, height: photo.height),
-                                createdAt: photo.createdAt?.dateTimeString,
-                                welcomeDescription: photo.description ?? "",
-                                thumbImageURL: photo.urls.thumb,
-                                largeImageURL: photo.urls.full,
-                                isLiked: photo.likedByUser
-                            )
-                        )
+                case .success(let photoResults):
+                        for photoResult in photoResults {
+                            self.photos.append(self.convert(photoResult))
                     }
                     self.lastLoadedPage = nextPage
                     NotificationCenter.default
                         .post(
-                            name: ImagesListService.DidChangeNotification,
+                            name: ImagesListService.didChangeNotification,
                             object: self,
                             userInfo: ["Photos": self.photos]
                         )
@@ -149,5 +139,17 @@ private extension ImagesListService {
     func nextPageNumber() -> Int {
         guard let lastLoadedPage = lastLoadedPage else { return 1 }
         return lastLoadedPage + 1
+    }
+    
+    func convert(_ photoResult: PhotoResult) -> Photo {
+        Photo(
+            id: photoResult.id,
+            size: CGSize(width: photoResult.width, height: photoResult.height),
+            createdAt: photoResult.createdAt?.dateTimeString,
+            welcomeDescription: photoResult.description ?? "",
+            thumbImageURL: photoResult.urls.thumb,
+            largeImageURL: photoResult.urls.full,
+            isLiked: photoResult.likedByUser
+        )
     }
 }
