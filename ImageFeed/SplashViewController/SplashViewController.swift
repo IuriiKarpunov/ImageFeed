@@ -69,7 +69,7 @@ final class SplashViewController: UIViewController  {
             buttonText: "ОК",
             completion: nil
         )
-        alertPresenter?.show(model)
+        alertPresenter?.showSplashView(model)
     }
     
     //MARK: - Creat View

@@ -102,8 +102,6 @@ final class ProfileViewController: UIViewController {
         guard let window = UIApplication.shared.windows.first else {
             return assertionFailure("Invalid Configuration")
         }
-//        let splashViewController = UIStoryboard(name: "Main", bundle: .main)
-//            .instantiateViewController(identifier: "SplashViewControllerIdentifier") as? SplashViewController
         window.rootViewController = SplashViewController()
     }
     

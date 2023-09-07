@@ -15,7 +15,7 @@ final class AlertPresenter: AlertPresenterProtocol {
         self.viewController = viewController
     }
     
-    func show(_ result: AlertModelOneButton) {
+    func showSplashView(_ result: AlertModelOneButton) {
         let alert = UIAlertController(title: result.title,
                                       message: result.message,
                                       preferredStyle: .alert)
@@ -25,6 +25,18 @@ final class AlertPresenter: AlertPresenterProtocol {
         
         alert.addAction(action)
         viewController?.presentedViewController?.present(alert, animated: true, completion: nil)
+    }
+    
+    func showOneButton(_ result: AlertModelOneButton) {
+        let alert = UIAlertController(title: result.title,
+                                      message: result.message,
+                                      preferredStyle: .alert)
+        let action = UIAlertAction(title: result.buttonText, style: .default) { _ in
+            result.completion?()
+        }
+        
+        alert.addAction(action)
+        viewController?.present(alert, animated: true, completion: nil)
     }
     
     func showTwoButton(_ result: AlertModelTwoButton) {

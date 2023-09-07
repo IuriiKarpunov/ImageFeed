@@ -89,7 +89,7 @@ class ImagesListViewController: UIViewController {
             buttonText: "ОК",
             completion: nil
         )
-        alertPresenter?.show(model)
+        alertPresenter?.showOneButton(model)
     }
 }
 
