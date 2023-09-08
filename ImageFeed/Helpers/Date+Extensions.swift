@@ -7,7 +7,7 @@
 
 import Foundation
 
-private var dateFormatter: DateFormatter = {
+var dateFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateStyle = .long
     formatter.timeStyle = .none
@@ -15,5 +15,5 @@ private var dateFormatter: DateFormatter = {
 }()
 
 extension Date {
-    var dateString: String { dateFormatter.string(from: self) }
+    var dateTimeString: String { dateFormatter.string(from: self) }
 }

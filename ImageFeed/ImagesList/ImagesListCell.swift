@@ -9,7 +9,11 @@ import UIKit
 
 final class ImagesListCell: UITableViewCell {
     
+    //MARK: - Variables
+    
+    weak var delegate: ImagesListCellDelegate?
     static let reuseIdentifier = "ImagesListCell"
+    private let imagesListService = ImagesListService.shared
     
     // MARK: - IBOutlet
     
@@ -18,20 +22,49 @@ final class ImagesListCell: UITableViewCell {
     @IBOutlet private weak var likeButton: UIButton!
     @IBOutlet private weak var dateLabel: UILabel!
     
+    // MARK: - Lifecycle
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cellImage.kf.cancelDownloadTask()
+    }
+    
     // MARK: - Public Methods
     
-    func configCell(photo: String, with indexPath: IndexPath) {
+    func configCell(photoURL: String, with indexPath: IndexPath) -> Bool {
         gradientLayer(linearGradient)
         
-        guard let image = UIImage(named: photo) else {
-            return
-        }
+        var status = false
+        guard let imageURL = URL(string: photoURL) else { return status }
+        let date = imagesListService.photos[indexPath.row].createdAt
+        let placeholder = UIImage(named: "placeholder.png")
         
-        cellImage.image = image
-        dateLabel.text = Date().dateString
-        let isLike = indexPath.row % 2 == 0
-        let likeImage = isLike ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
+        cellImage?.kf.indicatorType = .activity
+        cellImage?.kf.setImage(
+            with: imageURL,
+            placeholder: placeholder
+        ) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                status = true
+            case .failure:
+                self.cellImage.image = placeholder
+            }
+        }
+        dateLabel.text = date?.dateTimeString
+        return status
+    }
+    
+    func setIsLiked(isLiked: Bool) {
+        let likeImage = UIImage(named: isLiked ? "like_button_on" : "like_button_off")
         likeButton.setImage(likeImage, for: .normal)
+    }
+    
+    // MARK: - IBAction
+    
+    @IBAction private func likeButtonClicked(_ sender: Any) {
+        delegate?.imageListCellDidTapLike(self)
     }
     
     // MARK: - Private Methods

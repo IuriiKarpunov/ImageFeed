@@ -8,7 +8,7 @@
 import UIKit
 
 final class AuthViewController: UIViewController {
-
+    
     // MARK: - Public Properties
     
     weak var delegate: AuthViewControllerDelegate?

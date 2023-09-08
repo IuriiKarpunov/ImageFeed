@@ -11,18 +11,23 @@ final class SingleImageViewController: UIViewController {
     
     // MARK: - Public Properties
     
-    var image: UIImage! {
+    var largeImageURL: URL?
+    
+    // MARK: - IBOutlet
+    
+    @IBOutlet private var imageView: UIImageView!
+    @IBOutlet private var scrollView: UIScrollView!
+    
+    // MARK: - Private Properties
+    
+    private var alertPresenter: AlertPresenterProtocol?
+    private var image: UIImage! {
         didSet{
             guard isViewLoaded else { return }
             imageView.image = image
             rescaleAndCenterImageInScrollView(image: image)
         }
     }
-    
-    // MARK: - IBOutlet
-    
-    @IBOutlet private var imageView: UIImageView!
-    @IBOutlet private var scrollView: UIScrollView!
     
     // MARK: - UIStatusBarStyle
     
@@ -36,8 +41,8 @@ final class SingleImageViewController: UIViewController {
         super.viewDidLoad()
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.25
-        imageView.image = image
-        rescaleAndCenterImageInScrollView(image: image)
+        downloadImage()
+        alertPresenter = AlertPresenter(viewController: self)
     }
     
     // MARK: - IBAction
@@ -70,6 +75,37 @@ final class SingleImageViewController: UIViewController {
         let y = (newContentSize.height - visibleRectSize.height) / 2
         scrollView.setContentOffset(CGPoint(x: x, y: y), animated: false)
     }
+    
+    private func downloadImage() {
+        UIBlockingProgressHUD.show()
+        imageView.kf.setImage(with: largeImageURL) { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
+            
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let imageResult):
+                self.rescaleAndCenterImageInScrollView(image: imageResult.image)
+                self.image = imageResult.image
+            case .failure:
+                showError()
+            }
+        }
+    }
+    
+    private func showError() {
+        let model = AlertModelTwoButton(
+            title: "Что-то пошло не так.",
+            message: "Попробовать ещё раз?",
+            buttonTextOne: "Не надо",
+            buttonTextTwo: "Повторить",
+            completionOne: nil,
+            completionTwo: { [weak self] in
+                guard let self = self else { return }
+                downloadImage()
+            })
+        alertPresenter?.showTwoButton(model)
+    }
 }
 
 // MARK: - UIScrollViewDelegate
@@ -80,7 +116,9 @@ extension SingleImageViewController: UIScrollViewDelegate {
     }
     
     func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
-        UIView.animate(withDuration: 0.5) { [self] in
+        UIView.animate(withDuration: 0.5) { [weak self] in
+            guard let self = self else { return }
+            guard let image = imageView.image else { return }
             rescaleAndCenterImageInScrollView(image: image)
         }
     }

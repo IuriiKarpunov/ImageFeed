@@ -8,7 +8,7 @@
 import Foundation
 
 final class ProfileService {
-   
+    
     // MARK: - Constants
     
     static let shared = ProfileService()
@@ -56,9 +56,16 @@ final class ProfileService {
         self.task = task
         task.resume()
     }
+    
+    func cleanProfile() {
+        profile = nil
+        task = nil
+    }
 }
 
-extension ProfileService {
+    // MARK: - Private Methods
+
+private extension ProfileService {
     var selfProfileRequest: URLRequest {
         URLRequest.makeHTTPRequest(path: "/me", httpMethod: "GET")
     }
