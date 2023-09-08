@@ -41,11 +41,8 @@ final class ImagesListViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showSingleImageSegueIdentifier {
-            let viewController = segue.destination as? SingleImageViewController
-            let indexPath = sender as? IndexPath
-            
-            guard let viewController = viewController,
-                  let indexPath = indexPath else {
+            guard let viewController = segue.destination as? SingleImageViewController,
+                  let indexPath = sender as? IndexPath else {
                 return
             }
             
@@ -135,18 +132,20 @@ extension ImagesListViewController: ImagesListCellDelegate {
         
         imagesListService.changeLike(
             photoId: photo.id,
-            isLike: photo.isLiked) { [weak self] result in
-                guard let self = self else { return }
-                switch result {
-                case .success:
-                    self.photos = self.imagesListService.photos
-                    cell.setIsLiked(isLiked: self.photos[indexPath.row].isLiked)
-                    UIBlockingProgressHUD.dismiss()
-                case .failure:
-                    UIBlockingProgressHUD.dismiss()
-                    self.showError()
-                }
+            isLike: photo.isLiked
+        ) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                self.photos = self.imagesListService.photos
+                cell.setIsLiked(isLiked: self.photos[indexPath.row].isLiked)
+            case .failure:
+                self.showError()
             }
+            do {
+                UIBlockingProgressHUD.dismiss()
+            }
+        }
     }
 }
 
