@@ -79,12 +79,12 @@ final class ProfileViewController: UIViewController {
         return imageView
     }()
     
-    private let logoutButton: UIButton = {
+    private lazy var logoutButton: UIButton = {
         let button = UIButton(type: .custom)
         let image = UIImage(named: "Exit.png")
         button.setImage(image, for: .normal)
         button.addTarget(
-            ProfileViewController.self,
+            self,
             action: #selector(didTapLogoutButton),
             for: .touchUpInside
         )
