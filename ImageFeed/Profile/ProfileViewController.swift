@@ -8,18 +8,18 @@
 import UIKit
 import Kingfisher
 
-final class ProfileViewController: UIViewController {
-    
-    // MARK: - Private Constants
-    
-    private let profileService = ProfileService.shared
-    private let profileImageService = ProfileImageService.shared
-    private let imagesListService = ImagesListService.shared
+protocol ProfileViewControllerProtocol: AnyObject {
+    func updateProfileDetails(profile: Profile?)
+    func updateAvatar(imageURL: URL)
+}
+
+final class ProfileViewController: UIViewController & ProfileViewControllerProtocol {
     
     // MARK: - Subview Properties
     
     private var profileImageServiceObserver: NSObjectProtocol?
     private var alertPresenter: AlertPresenterProtocol?
+    private var presenter: ProfilePresenterProtocol?
     
     //MARK: - Layout variables
     
@@ -107,9 +107,8 @@ final class ProfileViewController: UIViewController {
         view.backgroundColor = .ypBlack
         addSubViews()
         applyConstraints()
-        
-        updateProfileDetails(profile: profileService.profile)
         alertPresenter = AlertPresenter(viewController: self)
+        presenter?.viewDidLoad()
     }
     
     // MARK: - Public Methods
@@ -129,9 +128,29 @@ final class ProfileViewController: UIViewController {
                 queue: .main
             ) { [weak self] _ in
                 guard let self = self else { return }
-                self.updateAvatar()
+                self.presenter?.updateAvatar()
             }
-        updateAvatar()
+        presenter?.updateAvatar()
+    }
+    
+    func showAlertExitProfile() {
+        let model = AlertModelTwoButton(
+            title: "Пока, пока!",
+            message: "Уверены что хотите выйти?",
+            buttonTextOne: "Да",
+            buttonTextTwo: "Нет",
+            completionOne: { [weak self] in
+                guard let self = self else { return }
+                presenter?.exitProfile()
+            },
+            completionTwo: nil
+        )
+        alertPresenter?.showTwoButton(model)
+    }
+    
+    func configure(_ presenter: ProfilePresenterProtocol) {
+        self.presenter = presenter
+        self.presenter?.view = self
     }
     
     // MARK: - IBAction
@@ -143,48 +162,12 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Private Methods
     
-    private func updateAvatar() {
-        guard
-            let profileImageURL = ProfileImageService.shared.avatarURL,
-            let imageURL = URL(string: profileImageURL)
-        else { return }
+    func updateAvatar(imageURL: URL) {
         let processor = RoundCornerImageProcessor(cornerRadius: 61)
         avatarImageView.kf.indicatorType = .activity
         avatarImageView.kf.setImage(with: imageURL,
                                     placeholder: UIImage(named: "Stub.png"),
                                     options: [.processor(processor)])
-    }
-    
-    private func exitProfile() {
-        OAuth2TokenStorage().token = nil
-        WebViewViewController.clean()
-        cleanService()
-        
-        guard let window = UIApplication.shared.windows.first else {
-            return assertionFailure("Invalid Configuration")
-        }
-        window.rootViewController = SplashViewController()
-    }
-    
-    private func showAlertExitProfile() {
-        let model = AlertModelTwoButton(
-            title: "Пока, пока!",
-            message: "Уверены что хотите выйти?",
-            buttonTextOne: "Да",
-            buttonTextTwo: "Нет",
-            completionOne: { [weak self] in
-                guard let self = self else { return }
-                exitProfile()
-            },
-            completionTwo: nil
-        )
-        alertPresenter?.showTwoButton(model)
-    }
-    
-    private func cleanService() {
-        profileService.cleanProfile()
-        profileImageService.cleanProfileImageURL()
-        imagesListService.cleanImagesList()
     }
     
     private func addSubViews() {

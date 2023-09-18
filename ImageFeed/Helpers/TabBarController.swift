@@ -16,6 +16,7 @@ final class TabBarController: UITabBarController {
         view.backgroundColor = .ypBlack
         
         let profileViewController = ProfileViewController()
+        profileViewController.configure(ProfilePresenter())
         profileViewController.tabBarItem = UITabBarItem(
             title: nil,
             image: UIImage(named: "tab_profile_active"),
