@@ -5,6 +5,7 @@
 //  Created by Iurii on 14.09.23.
 //
 
+import ImageFeed
 import Foundation
 
 final class WebViewViewControllerSpy: WebViewViewControllerProtocol {
@@ -22,6 +23,4 @@ final class WebViewViewControllerSpy: WebViewViewControllerProtocol {
     func setProgressHidden(_ isHidden: Bool) {
         
     }
-    
-    
 }

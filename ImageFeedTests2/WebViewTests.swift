@@ -1,12 +1,12 @@
 //
-//  ImageFeedTests.swift
-//  ImageFeedTests
+//  Image_Feed_Tests.swift
+//  Image Feed Tests
 //
-//  Created by Iurii on 19.09.23.
+//  Created by Iurii on 14.09.23.
 //
 
-import XCTest
 @testable import ImageFeed
+import XCTest
 
 final class WebViewTests: XCTestCase {
     

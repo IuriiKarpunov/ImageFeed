@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ImagesListViewControllerProtocol: AnyObject {
+public protocol ImagesListViewControllerProtocol: AnyObject {
     func updateTableViewAnimated(oldCount: Int, newCount: Int)
     func showError()
     func updateImagesListDetails()
@@ -58,7 +58,7 @@ final class ImagesListViewController: UIViewController & ImagesListViewControlle
         }
     }
     
-    // MARK: - Private Methods
+    // MARK: - Public Methods
     
     func updateImagesListDetails() {
         imageListServiceObserver = NotificationCenter.default
@@ -139,11 +139,11 @@ extension ImagesListViewController: UITableViewDataSource {
         }
         
         imagesListCell.delegate = self
-        guard let presenter = presenter else {
+        guard let presenter = presenter,
+              let photo = presenter.getPhoto(indexPath: indexPath) else {
             return UITableViewCell()
         }
         
-        let photo = presenter.getPhoto(indexPath: indexPath)
         let configuringCellStatus = imagesListCell.configCell(photoURL: photo.thumbImageURL, with: indexPath)
         imagesListCell.setIsLiked(isLiked: photo.isLiked)
         if configuringCellStatus {

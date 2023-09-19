@@ -33,6 +33,7 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        webView.accessibilityIdentifier = "UnsplashWebView"
         includeEstimatedProgressObservation()
         webView.navigationDelegate = self
         presenter?.viewDidLoad()
@@ -53,14 +54,6 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
         webView.load(request)
     }
     
-    // MARK: - IBAction
-    
-    @IBAction func didTapBackButton(_ sender: Any) {
-        delegate?.webViewViewControllerDidCancel(self)
-    }
-    
-    // MARK: - Private Methods
-    
     func setProgressValue(_ newValue: Float) {
         progressView.progress = newValue
     }
@@ -68,6 +61,14 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
     func setProgressHidden(_ isHidden: Bool) {
         progressView.isHidden = isHidden
     }
+    
+    // MARK: - IBAction
+    
+    @IBAction func didTapBackButton(_ sender: Any) {
+        delegate?.webViewViewControllerDidCancel(self)
+    }
+    
+    // MARK: - Private Methods
     
     private func includeEstimatedProgressObservation() {
         estimatedProgressObservation = webView.observe(

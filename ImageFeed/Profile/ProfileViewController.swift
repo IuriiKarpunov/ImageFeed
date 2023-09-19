@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-protocol ProfileViewControllerProtocol: AnyObject {
+public protocol ProfileViewControllerProtocol: AnyObject {
     func updateProfileDetails(profile: Profile?)
     func updateAvatar(imageURL: URL)
 }
@@ -38,6 +38,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         label.textColor = .ypWhite
         label.font = UIFont.boldSystemFont(ofSize: 23)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.accessibilityIdentifier = "nameLabel"
         
         return label
     }()
@@ -48,6 +49,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         label.text = "@ekaterina_nov"
         label.textColor = .ypGray
         label.font = UIFont.systemFont(ofSize: 13)
+        label.accessibilityIdentifier = "loginLabel"
         
         return label
     }()
@@ -82,6 +84,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
     private lazy var logoutButton: UIButton = {
         let button = UIButton(type: .custom)
         let image = UIImage(named: "Exit.png")
+        button.accessibilityIdentifier = "logoutButton"
         button.setImage(image, for: .normal)
         button.addTarget(
             self,
@@ -153,6 +156,14 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         self.presenter?.view = self
     }
     
+    func updateAvatar(imageURL: URL) {
+        let processor = RoundCornerImageProcessor(cornerRadius: 61)
+        avatarImageView.kf.indicatorType = .activity
+        avatarImageView.kf.setImage(with: imageURL,
+                                    placeholder: UIImage(named: "Stub.png"),
+                                    options: [.processor(processor)])
+    }
+    
     // MARK: - IBAction
     
     @objc
@@ -161,14 +172,6 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
     }
     
     // MARK: - Private Methods
-    
-    func updateAvatar(imageURL: URL) {
-        let processor = RoundCornerImageProcessor(cornerRadius: 61)
-        avatarImageView.kf.indicatorType = .activity
-        avatarImageView.kf.setImage(with: imageURL,
-                                    placeholder: UIImage(named: "Stub.png"),
-                                    options: [.processor(processor)])
-    }
     
     private func addSubViews() {
         view.addSubview(avatarImageView)
