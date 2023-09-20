@@ -66,7 +66,7 @@ final class ImageFeedUITests: XCTestCase {
         
         let image = app.scrollViews.images.element(boundBy: 0)
         XCTAssertTrue(image.waitForExistence(timeout: 1))
-        image.pinch(withScale: 3, velocity: 1) // zoom in
+        image.pinch(withScale: 3, velocity: 1)
         image.pinch(withScale: 0.5, velocity: -1)
         
         let navBackButtonWhiteButton = app.buttons["backButton"]
