@@ -56,9 +56,9 @@ final class ImageFeedUITests: XCTestCase {
         let cellToLike = tablesQuery.children(matching: .cell).element(boundBy: 1)
         
         cellToLike.buttons["LikeButton"].tap()
-        sleep(15)
+        sleep(5)
         cellToLike.buttons["LikeButton"].tap()
-        sleep(15)
+        sleep(5)
         
         cellToLike.tap()
         
@@ -67,7 +67,6 @@ final class ImageFeedUITests: XCTestCase {
         let image = app.scrollViews.images.element(boundBy: 0)
         XCTAssertTrue(image.waitForExistence(timeout: 1))
         image.pinch(withScale: 3, velocity: 1) // zoom in
-        // Zoom out
         image.pinch(withScale: 0.5, velocity: -1)
         
         let navBackButtonWhiteButton = app.buttons["backButton"]
