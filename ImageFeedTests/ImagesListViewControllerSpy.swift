@@ -9,15 +9,9 @@ import ImageFeed
 import Foundation
 
 final class ImagesListViewControllerSpy: ImagesListViewControllerProtocol {
-    func updateTableViewAnimated(oldCount: Int, newCount: Int) {
-        
-    }
+    func updateTableViewAnimated(oldCount: Int, newCount: Int) { }
     
-    func showError() {
-        
-    }
+    func showError() { }
     
-    func updateImagesListDetails() {
-        
-    }
+    func updateImagesListDetails() { }
 }

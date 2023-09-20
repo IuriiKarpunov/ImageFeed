@@ -13,7 +13,8 @@ public protocol ImagesListViewControllerProtocol: AnyObject {
     func updateImagesListDetails()
 }
 
-final class ImagesListViewController: UIViewController & ImagesListViewControllerProtocol {
+final class ImagesListViewController: UIViewController,
+                                      ImagesListViewControllerProtocol {
     
     // MARK: - Private Properties
     

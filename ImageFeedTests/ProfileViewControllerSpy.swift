@@ -9,11 +9,7 @@ import ImageFeed
 import Foundation
 
 final class ProfileViewControllerSpy: ProfileViewControllerProtocol {
-    func updateProfileDetails(profile: Profile?) {
-        
-    }
+    func updateProfileDetails(profile: Profile?) { }
     
-    func updateAvatar(imageURL: URL) {
-        
-    }
+    func updateAvatar(imageURL: URL) { }
 }

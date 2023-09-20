@@ -16,11 +16,7 @@ final class ProfilePresenterSpy: ProfilePresenterProtocol {
         viewDidLoadCalled = true
     }
     
-    func exitProfile() {
-        
-    }
+    func exitProfile() { }
     
-    func updateAvatar() {
-        
-    }
+    func updateAvatar() { }
 }

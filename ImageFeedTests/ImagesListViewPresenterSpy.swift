@@ -16,13 +16,9 @@ final class ImagesListViewPresenterSpy: ImagesListViewPresenterProtocol {
         updateIsCalled = true
     }
     
-    func fetchPhotosNextPage(indexPath: IndexPath) {
-        
-    }
+    func fetchPhotosNextPage(indexPath: IndexPath) { }
     
-    func imageListCellDidTapLike(_ cell: ImagesListCell, indexPath: IndexPath?) {
-        
-    }
+    func imageListCellDidTapLike(_ cell: ImagesListCell, indexPath: IndexPath?) { }
     
     func getPhotosCount() -> Int {
         return 0
@@ -40,7 +36,5 @@ final class ImagesListViewPresenterSpy: ImagesListViewPresenterProtocol {
         return nil
     }
     
-    func updateImagesListDetails() {
-        
-    }
+    func updateImagesListDetails() { }
 }
