@@ -7,14 +7,14 @@
 
 import UIKit
 
-final class ImagesListCell: UITableViewCell {
+public final class ImagesListCell: UITableViewCell {
     
     //MARK: - Variables
     
     weak var delegate: ImagesListCellDelegate?
     static let reuseIdentifier = "ImagesListCell"
     private let imagesListService = ImagesListService.shared
-    
+
     // MARK: - IBOutlet
     
     @IBOutlet private weak var linearGradient: UIView!
@@ -24,7 +24,7 @@ final class ImagesListCell: UITableViewCell {
     
     // MARK: - Lifecycle
     
-    override func prepareForReuse() {
+    public override func prepareForReuse() {
         super.prepareForReuse()
         cellImage.kf.cancelDownloadTask()
     }
